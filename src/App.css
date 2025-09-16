@@ -1,0 +1,14 @@
+/* App.css */
+.main-content {
+  padding-top: 70px; /* This should match the height of your navbar */
+  min-height: calc(100vh - 70px); /* Ensure content takes full height */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 60px;
+  }
+}

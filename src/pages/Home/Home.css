@@ -1,0 +1,27 @@
+/* Home.css */
+.home-page {
+  background-color: #f8f9fa; /* Lightest gray background */
+  min-height: 100vh;
+}
+
+/* Slider container adjustments */
+.image-slider-container {
+  margin-bottom: 2rem;
+}
+
+/* Brand grid section styling */
+.brands-section {
+  padding: 3rem 0;
+  background-color: #ffffff; /* White background for contrast */
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  .brands-section {
+    padding: 2rem 0;
+    margin: 1rem 0;
+  }
+}

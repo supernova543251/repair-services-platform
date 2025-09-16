@@ -1,0 +1,375 @@
+/* Model Grid Container */
+.model-grid-container {
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 80vh;
+}
+
+.model-grid-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.model-grid-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #8d8d8d, #292929);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.model-grid-header h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, #8d8d8d, #292929);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.model-grid-header h1:hover::after {
+    width: 80%;
+}
+
+/* Search Container */
+.model-search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.model-search-input {
+    width: 100%;
+    padding: 0.7rem 2.5rem 0.7rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.model-search-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.search-icon-button {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    color: #7f8c8d;
+    transition: color 0.2s;
+}
+
+.search-icon-button:hover {
+    color: #3498db;
+}
+
+.search-icon {
+    fill: #7f8c8d;
+    transition: fill 0.2s;
+}
+
+.search-icon-button:hover .search-icon {
+    fill: #3498db;
+}
+
+.model-search-input {
+    padding-right: 3.5rem;
+}
+
+.clear-search {
+    position: absolute;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+    transition: color 0.2s;
+}
+
+.clear-search:hover {
+    color: #e74c3c;
+}
+
+/* Suggestions Dropdown */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.suggestions-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 2px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: 50px;
+    box-sizing: border-box;
+}
+
+.suggestion-item:hover {
+    background: #f8f9fa;
+}
+
+.suggestion-image {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    margin-right: 10px;
+    border-radius: 4px;
+    background: #f5f5f5;
+}
+
+.suggestion-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+}
+
+/* Models Grid Layout */
+.models-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.model-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.model-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.model-image-container {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    background: white;
+}
+
+.model-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.model-card:hover .model-image {
+    transform: scale(1.05);
+}
+
+.model-name {
+    padding: 0.8rem;
+    text-align: center;
+    margin: 0;
+    font-weight: 600;
+    color: #34495e;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: clip;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-appearance: none;
+    /* Chrome, Safari */
+    -moz-appearance: none;
+    /* Firefox */
+    appearance: none;
+    /* Standard property */
+    -webkit-box-orient: vertical;
+    font-size: 0.9rem;
+    min-height: 2.8em;
+    line-height: 1.4;
+}
+
+.no-models {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1rem;
+    grid-column: 1 / -1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.model-card {
+    animation: fadeIn 0.4s ease forwards;
+    opacity: 0;
+}
+
+/* Delay animations for each card */
+.model-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.model-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.model-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.model-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.model-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.model-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .model-grid-container {
+        padding: 0.8rem;
+    }
+
+    .model-grid-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .model-search-input {
+        padding: 0.6rem 2.3rem 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .model-name {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .model-grid-container {
+        padding: 0.5rem;
+    }
+
+    .model-grid-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .model-search-container {
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .model-search-input {
+        padding: 0.5rem 2rem 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .search-icon-button {
+        right: 0.8rem;
+    }
+
+    .clear-search {
+        right: 2rem;
+        font-size: 1rem;
+    }
+
+    .suggestion-item {
+        padding: 6px 8px;
+        height: 45px;
+    }
+
+    .suggestion-image {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+
+    .suggestion-item span {
+        font-size: 0.8rem;
+    }
+
+    .models-grid {
+        gap: 0.8rem;
+    }
+
+    .model-name {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+        min-height: 2.8em;
+    }
+
+    .model-image-container {
+        padding-bottom: 90%;
+    }
+}
