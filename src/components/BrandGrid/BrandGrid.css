@@ -2,29 +2,143 @@
 .brand-grid-container {
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Title styles */
-.title-of-brands {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-top: 15px;
+  padding: 2.5rem 1rem; 
+  margin-bottom: 0px;
   position: relative;
-  padding-bottom: 15px;
-  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #eab6ff 0%, #e2d9f0 50%, #8779b3 100%);
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
 
-.title-of-brands::after {
-  content: '';
+/* Gradient background elements */
+.gradient-bg {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.gradient-1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -100px;
+  background: linear-gradient(135deg, rgba(246, 161, 57, 0.2) 0%, rgba(255, 191, 15, 0) 70%);
+}
+
+.gradient-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -150px;
+  right: -150px;
+  background: linear-gradient(135deg, rgb(227, 211, 255) 0%, rgba(255, 91, 91, 0.221) 70%);
+}
+
+/* Polygonal shapes */
+.polygon {
+  position: absolute;
+  background-color: rgba(255, 248, 235, 0.295);
+  z-index: 0;
+  border: 1px solid rgba(255, 190, 24, 0.275);
+  backdrop-filter: blur(5px);
+}
+
+.polygon-1 {
+  width: 180px;
+  height: 180px;
+  top: 10%;
+  left: 5%;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  animation: float 15s ease-in-out infinite;
+}
+
+.polygon-2 {
+  width: 120px;
+  height: 120px;
+  top: 65%;
+  right: 10%;
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  animation: float 18s ease-in-out infinite reverse;
+}
+
+.polygon-3 {
+  width: 200px;
+  height: 200px;
+  bottom: 15%;
+  left: 10%;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  animation: float 20s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.polygon-4 {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  right: 15%;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  animation: float 16s ease-in-out infinite reverse;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(10px, -15px) rotate(2deg);
+  }
+  66% {
+    transform: translate(-5px, 10px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* Gold accents */
+.gold-accent {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(255, 198, 12, 0.3), rgba(212, 175, 55, 0.15));
+  z-index: 0;
+  border-radius: 2px;
+}
+
+.gold-accent-1 {
+  width: 80px;
   height: 3px;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
+  top: 15%;
+  right: 20%;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+.gold-accent-2 {
+  width: 3px;
+  height: 80px;
+  bottom: 25%;
+  left: 20%;
+  animation: shimmer 13s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.gold-accent-3 {
+  width: 60px;
+  height: 2px;
+  top: 70%;
+  left: 15%;
+  animation: shimmer 12s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Grid container */
@@ -32,16 +146,18 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
-  margin-top: 2rem;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
-/* Brand item styling */
+/* Brand items */
 .brand-item {
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.2rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -51,6 +167,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .brand-item::before {
@@ -59,8 +176,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #876db7, transparent);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -71,7 +188,8 @@
 
 .brand-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 1);
 }
 
 /* Click animation */
@@ -91,6 +209,7 @@
   object-fit: contain;
   margin-bottom: 0.8rem;
   transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
 }
 
 .brand-item:hover .brand-logo {
@@ -100,13 +219,14 @@
 .brand-name {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #444;
+  color: #333;
   margin: 0;
   transition: all 0.3s ease;
+  letter-spacing: 0.5px;
 }
 
 .brand-item:hover .brand-name {
-  color: #2980b9;
+  color: #7e4ead;
 }
 
 /* Responsive adjustments */
@@ -118,10 +238,11 @@
     gap: 1.2rem;
   }
   
-  /* Calculate height to show exactly 6 rows */
-  .brand-grid-container {
-    height: calc(100vh - 100px);
-    overflow-y: auto;
+  /* Hide some elements on smaller screens */
+  .polygon-3,
+  .polygon-4,
+  .gold-accent-3 {
+    display: none;
   }
 }
 
@@ -130,10 +251,6 @@
   .brand-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-  }
-  
-  .title-of-brands {
-    font-size: 1.4rem;
   }
   
   .brand-item {
@@ -147,6 +264,26 @@
   
   .brand-name {
     font-size: 0.85rem;
+  }
+  
+  /* Adjust container for mobile */
+  .brand-grid-container {
+    padding: 1.8rem 0.8rem;
+  }
+  
+  /* Hide more elements on mobile */
+  .polygon-2,
+  .gold-accent-2 {
+    display: none;
+  }
+  
+  .polygon-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .gradient-1, .gradient-2 {
+    filter: blur(40px);
   }
 }
 
@@ -169,6 +306,20 @@
   
   .brand-name {
     font-size: 0.8rem;
+  }
+  
+  .brand-grid-container {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  /* Hide all decorative elements on very small screens */
+  .polygon,
+  .gold-accent {
+    display: none;
+  }
+  
+  .gradient-1, .gradient-2 {
+    filter: blur(30px);
   }
 }
 
@@ -199,6 +350,6 @@
 
 /* Focus styles for accessibility */
 .brand-item:focus {
-  outline: 2px solid #3498db;
+  outline: 2px solid #d4af37;
   outline-offset: 2px;
 }

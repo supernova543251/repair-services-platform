@@ -1,0 +1,326 @@
+/* Location Overlay - Modern Design with unique class names */
+.lo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.lo-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header */
+.lo-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.lo-back-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.lo-back-button:hover {
+  background-color: #f8f9fa;
+}
+
+.lo-header-text h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.lo-header-text p {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0 0;
+}
+
+/* Search Bar */
+.lo-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.lo-search-container:focus-within {
+  background: white;
+  border-color: #0066ff;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.lo-search-icon {
+  color: #666;
+  margin-right: 12px;
+}
+
+.lo-search-input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 16px;
+  outline: none;
+  color: #1a1a1a;
+}
+
+.lo-search-input::placeholder {
+  color: #999;
+}
+
+.lo-clear-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.lo-clear-btn:hover {
+  background: #e8eaed;
+  color: #666;
+}
+
+/* Current Location */
+.lo-current-location {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border: 2px solid #f1f3f4;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 16px;
+}
+
+.lo-current-location:hover {
+  border-color: #0066ff;
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.lo-location-icon {
+  background: #0066ff;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lo-location-text h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.lo-location-text p {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0 0;
+}
+
+/* Saved Addresses */
+.lo-saved-section {
+  flex: 1;
+}
+
+.lo-saved-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #1a1a1a;
+}
+
+.lo-addresses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lo-address-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border: 2px solid #f1f3f4;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 12px;
+}
+
+.lo-address-card:hover {
+  border-color: #e8eaed;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.lo-address-card.lo-selected {
+  border-color: #0066ff;
+  background: #f0f7ff;
+}
+
+.lo-pin-icon {
+  color: #0066ff;
+  flex-shrink: 0;
+}
+
+.lo-address-details {
+  flex: 1;
+}
+
+.lo-address-details h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.lo-address-details p {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0 0;
+}
+
+.lo-address-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.lo-icon-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.lo-icon-btn:hover {
+  background: #f8f9fa;
+  color: #1a1a1a;
+}
+
+/* Confirm Button */
+.lo-confirm-section {
+  padding: 16px 0;
+  background: white;
+  border-top: 1px solid #f1f3f4;
+}
+
+.lo-confirm-btn {
+  width: 100%;
+  padding: 16px;
+  background: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lo-confirm-btn:hover:not(:disabled) {
+  background: #0052cc;
+  transform: translateY(-1px);
+}
+
+.lo-confirm-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lo-content {
+    padding: 16px;
+    gap: 20px;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 22px;
+  }
+  
+  .lo-search-container {
+    padding: 10px 14px;
+  }
+  
+  .lo-current-location,
+  .lo-address-card {
+    padding: 14px;
+  }
+  
+  .lo-confirm-btn {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lo-content {
+    padding: 12px;
+    gap: 16px;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 20px;
+  }
+  
+  .lo-header-text p {
+    font-size: 13px;
+  }
+  
+  .lo-search-input {
+    font-size: 15px;
+  }
+  
+  .lo-location-text h3,
+  .lo-address-details h4 {
+    font-size: 15px;
+  }
+  
+  .lo-location-text p,
+  .lo-address-details p {
+    font-size: 13px;
+  }
+}

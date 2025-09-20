@@ -1,0 +1,132 @@
+.footer {
+  background: #0f172a;
+  color: #d1d5db;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header with FixFlash logo */
+.footer-header {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.footer-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00bfff, #6a5acd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Toggle (visible only on mobile & tablet) */
+.footer-toggle {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 1px solid #1e293b;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Footer content container */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.footer-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #38bdf8;
+}
+
+.footer-about {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+/* Social icons */
+.social-icons {
+  display: flex;
+  gap: 14px;
+}
+
+.social-icons a {
+  text-decoration: none;
+  color: #9ca3af;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #38bdf8;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.85rem;
+  border-top: 1px solid #1e293b;
+  color: #94a3b8;
+}
+
+/* Mobile/tablet collapsible behavior */
+@media (max-width: 1024px) {
+  .footer-container {
+    display: none;
+    padding: 20px;
+  }
+
+  .footer-container.show {
+    display: block;
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  .footer-toggle {
+    display: flex;
+  }
+}
+
+/* Slide animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

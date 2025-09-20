@@ -21,6 +21,7 @@ function Home() {
         }
       ]} />
       <ServicesCardView/>
+      <p className="section-title">Brands we work</p>
       <BrandGrid/>
       <RepairProcess/>
     </div>

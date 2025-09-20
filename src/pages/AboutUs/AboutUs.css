@@ -1,0 +1,374 @@
+/* AboutUs.css - Mobile First Design */
+
+/* Base Styles */
+.fixflash-about-container {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #2d3748;
+  line-height: 1.6;
+  padding: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* Header Section */
+.fixflash-about-header {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: linear-gradient(135deg, #4a6cf7 0%, #2e4fd0 100%);
+  color: white;
+  border-radius: 0 0 16px 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.fixflash-header-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.fixflash-info-icon {
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.fixflash-main-heading {
+  font-size: 1.875rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.fixflash-header-subtitle {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Intro Section */
+.fixflash-intro-section {
+  padding: 0 1.5rem 2rem;
+}
+
+.fixflash-intro-text {
+  font-size: 1.125rem;
+  text-align: center;
+  color: #4a5568;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Section Common Styles */
+.fixflash-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.fixflash-mission-section,
+.fixflash-services-section,
+.fixflash-values-section,
+.fixflash-trust-section,
+.fixflash-cta-section {
+  padding: 2.5rem 0;
+}
+
+.fixflash-mission-section {
+  background-color: #f8fafc;
+}
+
+.fixflash-section-heading {
+  font-size: 1.625rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.fixflash-section-heading-center {
+  font-size: 1.625rem;
+  margin-bottom: 2rem;
+  color: #2d3748;
+  font-weight: 600;
+  text-align: center;
+}
+
+.fixflash-section-text {
+  font-size: 1.0625rem;
+  color: #4a5568;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.fixflash-section-icon {
+  color: #4a6cf7;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Services Section */
+.fixflash-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.fixflash-service-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.fixflash-service-card:active {
+  transform: translateY(2px);
+}
+
+.fixflash-service-icon {
+  background: #4a6cf7;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: white;
+}
+
+.fixflash-service-title {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.fixflash-service-description {
+  font-size: 0.9375rem;
+  color: #718096;
+  margin: 0;
+}
+
+/* Values Section */
+.fixflash-values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.fixflash-value-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.fixflash-value-icon {
+  color: #4a6cf7;
+  margin-bottom: 1rem;
+}
+
+.fixflash-value-title {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.fixflash-value-text {
+  font-size: 0.9375rem;
+  color: #718096;
+  margin: 0;
+}
+
+/* Trust Section */
+.fixflash-trust-section {
+  background-color: #f8fafc;
+}
+
+.fixflash-trust-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.fixflash-trust-text {
+  font-size: 1.0625rem;
+  text-align: center;
+  color: #4a5568;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.fixflash-trust-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fixflash-trust-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.fixflash-check-icon {
+  color: #48bb78;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* CTA Section */
+.fixflash-cta-section {
+  background: linear-gradient(135deg, #4a6cf7 0%, #2e4fd0 100%);
+  color: white;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.fixflash-cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.fixflash-cta-heading {
+  font-size: 1.625rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.fixflash-cta-text {
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.fixflash-cta-button {
+  background: white;
+  color: #4a6cf7;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fixflash-cta-button:active {
+  transform: scale(0.98);
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .fixflash-about-header {
+    padding: 3.5rem 2rem;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 3rem;
+  }
+  
+  .fixflash-main-heading {
+    font-size: 2.5rem;
+  }
+  
+  .fixflash-header-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .fixflash-intro-section {
+    padding: 0 2rem 3rem;
+  }
+  
+  .fixflash-section-content {
+    padding: 0 2rem;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .fixflash-mission-section,
+  .fixflash-services-section,
+  .fixflash-values-section,
+  .fixflash-trust-section,
+  .fixflash-cta-section {
+    padding: 3.5rem 0;
+  }
+  
+  .fixflash-text-content {
+    flex: 2;
+  }
+  
+  .fixflash-icon-content {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .fixflash-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .fixflash-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .fixflash-trust-content {
+    padding: 0 2rem;
+  }
+  
+  .fixflash-cta-section {
+    padding: 3.5rem 2rem;
+  }
+  
+  .fixflash-cta-heading {
+    font-size: 2rem;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .fixflash-about-container {
+    max-width: 1200px;
+  }
+  
+  .fixflash-about-header {
+    padding: 4rem 2rem;
+  }
+  
+  .fixflash-main-heading {
+    font-size: 3rem;
+  }
+  
+  .fixflash-section-heading,
+  .fixflash-section-heading-center {
+    font-size: 2rem;
+  }
+  
+  .fixflash-services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .fixflash-values-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .fixflash-service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fixflash-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}

@@ -1,7 +1,30 @@
 /* Home.css */
 .home-page {
-  background-color: #f8f9fa; /* Lightest gray background */
+  background-color: #f8f9fa;
   min-height: 100vh;
+}
+
+/* Section title styling */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+  margin: 2rem 0 1.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #3f51b5;
+  border-radius: 2px;
 }
 
 /* Slider container adjustments */
@@ -12,16 +35,34 @@
 /* Brand grid section styling */
 .brands-section {
   padding: 3rem 0;
-  background-color: #ffffff; /* White background for contrast */
+  background-color: #ffffff;
   margin: 2rem 0;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* Responsive padding */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+  }
+  
   .brands-section {
     padding: 2rem 0;
     margin: 1rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.3rem;
+    margin: 1rem 0 0.8rem;
+    padding-bottom: 0.4rem;
+  }
+  
+  .section-title::after {
+    width: 50px;
+    height: 2.5px;
   }
 }

@@ -1,0 +1,446 @@
+/* Help & Support Page Styles */
+.did-help-support-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Header Styles */
+.did-help-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+}
+
+.did-header-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.did-header-icon {
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.did-main-title {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.did-header-description {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* Search Section */
+.did-search-section {
+  margin-bottom: 40px;
+}
+
+.did-search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.did-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.did-search-input {
+  width: 100%;
+  padding: 16px 16px 16px 48px;
+  border: 2px solid #e1e5e9;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.did-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Content Layout */
+.did-help-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Section Headers */
+.did-section-title {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Contact Cards */
+.did-contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.did-contact-card {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.did-contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.did-contact-icon {
+  margin-bottom: 16px;
+  color: #667eea;
+}
+
+.did-contact-title {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #2d3748;
+}
+
+.did-contact-description {
+  color: #718096;
+  margin-bottom: 20px;
+}
+
+.did-contact-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.did-contact-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+}
+
+/* FAQ Section */
+.did-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.did-faq-item {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.did-faq-question {
+  width: 100%;
+  padding: 20px;
+  text-align: left;
+  background: white;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d3748;
+  transition: background-color 0.3s ease;
+}
+
+.did-faq-question:hover {
+  background: #f7fafc;
+}
+
+.did-faq-text {
+  flex: 1;
+  text-align: left;
+  margin-right: 16px;
+}
+
+.did-faq-answer {
+  padding: 20px;
+  background: #f7fafc;
+  border-top: 1px solid #e2e8f0;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* Guides Section */
+.did-guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.did-guide-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.did-guide-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.did-guide-title {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #2d3748;
+}
+
+.did-guide-description {
+  color: #718096;
+  margin-bottom: 16px;
+}
+
+.did-guide-steps {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.did-guide-step {
+  padding: 4px 0;
+  color: #4a5568;
+  position: relative;
+  padding-left: 20px;
+}
+
+.did-guide-step:before {
+  content: "•";
+  color: #667eea;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.did-guide-btn {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.did-guide-btn:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Tickets Section */
+.did-tickets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.did-ticket-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.did-ticket-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.did-ticket-info {
+  flex: 1;
+}
+
+.did-ticket-subject {
+  margin-bottom: 8px;
+  color: #2d3748;
+}
+
+.did-ticket-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.did-status-resolved {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.did-status-in-progress {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.did-ticket-date {
+  color: #718096;
+  margin: 0 20px;
+}
+
+.did-view-ticket-btn {
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #667eea;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.did-view-ticket-btn:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .did-help-support-container {
+    padding: 16px;
+  }
+  
+  .did-main-title {
+    font-size: 2rem;
+  }
+  
+  .did-contact-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .did-guides-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .did-ticket-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .did-ticket-date {
+    margin: 0;
+  }
+  
+  .did-search-input {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .did-help-header {
+    padding: 24px 16px;
+  }
+  
+  .did-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .did-contact-card {
+    padding: 24px;
+  }
+  
+  .did-faq-question {
+    font-size: 1rem;
+    padding: 16px;
+  }
+  
+  .did-faq-answer {
+    padding: 16px;
+  }
+  
+  .did-ticket-item {
+    padding: 16px;
+  }
+}
+
+/* Animation for FAQ expansion */
+.did-faq-answer {
+  animation: didFadeIn 0.3s ease-in-out;
+}
+
+@keyframes didFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus states for accessibility */
+.did-contact-btn:focus,
+.did-guide-btn:focus,
+.did-view-ticket-btn:focus,
+.did-faq-question:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.did-search-input:focus {
+  outline: none;
+}
+
+/* Utility classes for text alignment */
+.did-text-left {
+  text-align: left;
+}
+
+.did-text-center {
+  text-align: center;
+}
+
+.did-text-right {
+  text-align: right;
+}
+
+/* Additional spacing utilities */
+.did-mb-20 {
+  margin-bottom: 20px;
+}
+
+.did-mt-20 {
+  margin-top: 20px;
+}
+
+.did-p-20 {
+  padding: 20px;
+}

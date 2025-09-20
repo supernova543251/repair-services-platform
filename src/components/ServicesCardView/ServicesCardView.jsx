@@ -10,6 +10,7 @@ function ServicesCardView() {
     const [isAtStart, setIsAtStart] = useState(true);
     const [isAtEnd, setIsAtEnd] = useState(false);
     const navigate = useNavigate();
+    
     useEffect(() => {
         const checkIfDesktop = () => {
             const isDesktop = window.innerWidth > 768;
@@ -62,7 +63,6 @@ function ServicesCardView() {
 
     return (
         <div className="services-container">
-            <h2 className="services-title">Our Services</h2>
             <div className="services-wrapper">
                 {showArrows && !isAtStart && (
                     <button
@@ -114,4 +114,4 @@ function ServicesCardView() {
     );
 }
 
-export default ServicesCardView;  
+export default ServicesCardView;

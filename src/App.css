@@ -4,6 +4,7 @@
   min-height: calc(100vh - 70px); /* Ensure content takes full height */
   width: 100%;
   box-sizing: border-box;
+  
 }
 
 /* Responsive adjustments */

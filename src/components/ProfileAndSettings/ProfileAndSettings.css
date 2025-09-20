@@ -1,0 +1,403 @@
+/* Profile and Settings Overlay Styles */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.profile-container {
+  background: #fff;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  animation: slideInRight 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.profile-container.sidebar {
+  width: 380px;
+}
+
+.profile-container.mobile {
+  width: 100%;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  z-index: 11;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Profile header */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 1.5rem;
+  border-bottom: 1px solid #f1f3f4;
+  text-align: center;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f0f5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.profile-header h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.user-phone {
+  margin: 0.25rem 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* Profile menu */
+.profile-menu {
+  padding: 1rem 0;
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #374151;
+  border-bottom: 1px solid #f9fafb;
+}
+
+.menu-item:hover {
+  background-color: #f9fafb;
+}
+
+.menu-item-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.menu-icon {
+  margin-right: 1rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.menu-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Language Dropdown Styles - Unique class names */
+.profile-settings-language-dropdown {
+  position: relative;
+}
+
+.profile-settings-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 110px;
+  justify-content: space-between;
+}
+
+.profile-settings-dropdown-toggle:hover {
+  background: #f3f4f6;
+}
+
+.profile-settings-dropdown-toggle .profile-settings-rotate {
+  transform: rotate(180deg);
+}
+
+.profile-settings-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  z-index: 10;
+  min-width: 120px;
+  margin-top: 0.5rem;
+}
+
+.profile-settings-dropdown-item {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.profile-settings-dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+.profile-settings-dropdown-item.profile-settings-selected {
+  background: #eff6ff;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Logout section */
+.logout-section {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f1f3f4;
+  margin-top: auto;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  background: none;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  color: #ef4444;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+}
+
+.logout-btn span {
+  margin-left: 0.75rem;
+}
+
+/* Test info */
+.test-info {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f1f3f4;
+  background: #f9fafb;
+}
+
+.test-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.test-info strong {
+  color: #374151;
+}
+
+/* ===== SMARTPHONE OPTIMIZATIONS ===== */
+@media (max-width: 768px) {
+  .profile-container.mobile {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  
+  .profile-header {
+    padding: 2.5rem 1rem 1rem;
+  }
+  
+  .avatar {
+    width: 70px;
+    height: 70px;
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .profile-header h2 {
+    font-size: 1.375rem;
+  }
+  
+  .menu-item {
+    padding: 1rem;
+    min-height: 56px; /* Better touch target */
+  }
+  
+  .menu-label {
+    font-size: 1rem; /* Slightly larger text */
+  }
+  
+  .logout-section {
+    padding: 1rem;
+  }
+  
+  .profile-settings-dropdown-menu {
+    right: auto;
+    left: 0;
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .profile-settings-dropdown-toggle {
+    min-width: 120px;
+    padding: 0.625rem 0.75rem;
+  }
+  
+  .close-btn {
+    width: 44px;
+    height: 44px;
+    top: 12px;
+    right: 12px;
+  }
+  
+  /* Prevent zoom on input focus for iOS */
+  @media (max-width: 480px) {
+    .profile-settings-dropdown-toggle {
+      font-size: 16px; /* Prevents zoom on focus in iOS */
+    }
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .profile-header {
+    padding: 2rem 0.75rem 1rem;
+  }
+  
+  .menu-item {
+    padding: 0.875rem;
+  }
+  
+  .menu-icon {
+    margin-right: 0.75rem;
+  }
+  
+  .profile-settings-dropdown-toggle {
+    min-width: 100px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Safe area insets for notched phones */
+@supports(padding: max(0px)) {
+  .profile-container.mobile {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .logout-section {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Prevent body scroll when overlay is open */
+body.profile-overlay-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 769px) {
+  .profile-container.sidebar {
+    width: 380px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .menu-item {
+    border-bottom: 2px solid #000;
+  }
+  
+  .profile-settings-dropdown-toggle {
+    border: 2px solid #000;
+  }
+  
+  .logout-btn {
+    border: 2px solid #a00;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .profile-backdrop,
+  .profile-container,
+  .close-btn,
+  .menu-item,
+  .profile-settings-dropdown-toggle,
+  .logout-btn {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

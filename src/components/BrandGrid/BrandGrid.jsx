@@ -21,7 +21,21 @@ const BrandGrid = () => {
 
   return (
     <div className="brand-grid-container">
-      <h2 className="title-of-brands">Brands We Service</h2>
+      {/* Gradient background elements */}
+      <div className="gradient-bg gradient-1"></div>
+      <div className="gradient-bg gradient-2"></div>
+      
+      {/* Polygonal shapes */}
+      <div className="polygon polygon-1"></div>
+      <div className="polygon polygon-2"></div>
+      <div className="polygon polygon-3"></div>
+      <div className="polygon polygon-4"></div>
+      
+      {/* Gold accent elements */}
+      <div className="gold-accent gold-accent-1"></div>
+      <div className="gold-accent gold-accent-2"></div>
+      <div className="gold-accent gold-accent-3"></div>
+      
       <div className="brand-grid">
         {brand.map((brand, index) => (
           <div
