@@ -15,7 +15,7 @@ import AccountAndPrivacy from './pages/AccountAndPrivacy/AccountAndPrivacy';
 import Addresses from './pages/Addresses/Addresses';
 import HelpAndSupport from './pages/HelpAndSupport/HelpAndSupport';
 import AboutUs from './pages/AboutUs/AboutUs';
-import Home from './pages/home/Home';
+import HomePage from './pages/HomePage/HomePage';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Navbar />
         <div className="main-content">
           <Routes>
-            <Route path="/" element={<Home/>} />
+            <Route path="/" element={<HomePage/>} />
             <Route path="/brand" element={<BrandPage />} />
             <Route path="/brand/:brand" element={<ModelPage />} />
             <Route path="/brand/:brand/:model" element={<VariantPage />} />

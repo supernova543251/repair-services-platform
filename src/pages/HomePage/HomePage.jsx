@@ -1,11 +1,11 @@
 import React from 'react'
 import BrandGrid from '../../components/BrandGrid/BrandGrid'
 import ImageSlider from '../../components/ImageSlider/ImageSlider'
-import './Home.css';
+import './HomePage.css';
 import RepairProcess from '../../components/RepairProcess/RepairProcess';
 import ServicesCardView from '../../components/ServicesCardView/ServicesCardView';
 
-function Home() {
+function HomePage() {
   return (
     <div className="home-page">
       <ImageSlider slides={[
@@ -28,4 +28,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default HomePage;
