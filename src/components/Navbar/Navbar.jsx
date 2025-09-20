@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { Search, User, Settings } from 'lucide-react';
-import LocationOverlay from './LocationOverlay';
 import LoginOverlay from '../LoginOverlay/LoginOverlay';
 import ProfileAndSettings from '../ProfileAndSettings/ProfileAndSettings';
 import { useLogin } from '../../Context/LoginContext/LoginContext';
+import LocationOverlay from '../LocationOverlay/LocationOverlay';
 
 const Navbar = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
