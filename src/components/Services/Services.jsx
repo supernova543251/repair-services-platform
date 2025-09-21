@@ -129,21 +129,7 @@ function Services({ variant, modelName }) {
 
     return (
         <div className="services-modern-container">
-            <div className="services-header">
-                <h1 className="modern-title">
-                    {modelName && variant 
-                        ? `${modelName} (${variant.name}) Services` 
-                        : modelName 
-                            ? `${modelName} Services` 
-                            : 'Select Services'}
-                </h1>
-                {selectedServices.length > 0 && (
-                    <div className="selection-counter">
-                        {selectedServices.length} {selectedServices.length === 1 ? 'item' : 'items'}
-                    </div>
-                )}
-            </div>
-
+            
             <div className="services-search-container">
                 <div className="search-input-wrapper" ref={searchInputRef}>
                     <input

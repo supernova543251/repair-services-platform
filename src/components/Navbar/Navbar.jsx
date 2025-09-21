@@ -7,6 +7,28 @@ import ProfileAndSettings from '../ProfileAndSettings/ProfileAndSettings';
 import { useLogin } from '../../Context/LoginContext/LoginContext';
 import LocationOverlay from '../LocationOverlay/LocationOverlay';
 
+// Translation data for the navbar
+const navbarTranslations = {
+  en: {
+    searchPlaceholder: 'Search for "phone services"',
+    login: 'Login',
+    profile: 'Profile',
+    logout: 'Logout'
+  },
+  hi: {
+    searchPlaceholder: '"फोन सर्विस" के लिए खोजें',
+    login: 'लॉग इन',
+    profile: 'प्रोफाइल',
+    logout: 'लॉग आउट'
+  },
+  mr: {
+    searchPlaceholder: '"फोन सर्विस" शोधा',
+    login: 'लॉग इन',
+    profile: 'प्रोफाइल',
+    logout: 'लॉग आउट'
+  }
+};
+
 const Navbar = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isLocationOverlayOpen, setIsLocationOverlayOpen] = useState(false);
@@ -18,6 +40,33 @@ const Navbar = () => {
   });
   const navigate = useNavigate();
   const { isLoggedIn, logout, toggleLogin, userData } = useLogin();
+  
+  // Get the selected language from localStorage or default to English
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    return savedLanguage && navbarTranslations[savedLanguage] ? savedLanguage : 'en';
+  });
+
+  // Update language when it changes in localStorage
+  React.useEffect(() => {
+    const handleLanguageChange = () => {
+      const savedLanguage = localStorage.getItem('preferredLanguage');
+      if (savedLanguage && navbarTranslations[savedLanguage]) {
+        setSelectedLanguage(savedLanguage);
+      }
+    };
+    
+    // Listen for custom event that can be triggered when language changes
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    // Also check periodically (in case the event approach doesn't work)
+    const interval = setInterval(handleLanguageChange, 1000);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
@@ -68,7 +117,7 @@ const Navbar = () => {
             <Search className="search_bar-icon" size={18} />
             <input
               type="text"
-              placeholder='Search for "phone services"'
+              placeholder={navbarTranslations[selectedLanguage].searchPlaceholder}
               className="search_bar-input"
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
@@ -85,13 +134,13 @@ const Navbar = () => {
                 title="Toggle login state for testing"
               >
                 <Settings size={16} />
-                <span>{isLoggedIn ? 'Logout' : 'Login'}</span>
+                <span>{isLoggedIn ? navbarTranslations[selectedLanguage].logout : navbarTranslations[selectedLanguage].login}</span>
               </button>
             )}
             
             <a href="#" className="action-button" onClick={handleLoginClick}>
               <User className="icon" size={18} />
-              <span>{isLoggedIn ? 'Profile' : 'Login'}</span>
+              <span>{isLoggedIn ? navbarTranslations[selectedLanguage].profile : navbarTranslations[selectedLanguage].login}</span>
             </a>
           </div>
         </div>

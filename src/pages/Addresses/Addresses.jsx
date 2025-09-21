@@ -1,8 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Plus, Edit, Trash2, Star, Home, Building, Navigation } from 'lucide-react';
 import './Addresses.css';
 
+// Translation data
+const addressesTranslations = {
+  en: {
+    title: "My Addresses",
+    subtitle: "Manage your delivery and pickup locations",
+    addAddress: "Add New Address",
+    home: "Home",
+    work: "Work",
+    other: "Other",
+    default: "Default",
+    setDefault: "Set as Default",
+    edit: "Edit address",
+    delete: "Delete address",
+    deleteConfirm: "Are you sure you want to delete this address?",
+    emptyTitle: "No addresses saved yet",
+    emptySubtitle: "Add your first address to get started with services",
+    addFirstAddress: "Add Your First Address"
+  },
+  hi: {
+    title: "मेरे पते",
+    subtitle: "अपने डिलीवरी और पिकअप स्थानों को प्रबंधित करें",
+    addAddress: "नया पता जोड़ें",
+    home: "घर",
+    work: "कार्य",
+    other: "अन्य",
+    default: "डिफ़ॉल्ट",
+    setDefault: "डिफ़ॉल्ट के रूप में सेट करें",
+    edit: "पता संपादित करें",
+    delete: "पता हटाएं",
+    deleteConfirm: "क्या आप वाकई इस पते को हटाना चाहते हैं?",
+    emptyTitle: "अभी तक कोई पते सहेजे नहीं गए हैं",
+    emptySubtitle: "सेवाओं का उपयोग शुरू करने के लिए अपना पहला पता जोड़ें",
+    addFirstAddress: "अपना पहला पता जोड़ें"
+  },
+  mr: {
+    title: "माझे पत्ते",
+    subtitle: "तुमची डिलिवरी आणि पिकअप लोकेशन्स व्यवस्थापित करा",
+    addAddress: "नवीन पत्ता जोडा",
+    home: "घर",
+    work: "काम",
+    other: "इतर",
+    default: "डीफॉल्ट",
+    setDefault: "डीफॉल्ट म्हणून सेट करा",
+    edit: "पत्ता संपादित करा",
+    delete: "पत्ता हटवा",
+    deleteConfirm: "तुम्हाला खात्री आहे की तुम्ही हा पत्ता हटवू इच्छिता?",
+    emptyTitle: "अद्याप कोणतेही पत्ते जतन केलेले नाहीत",
+    emptySubtitle: "सेवा सुरू करण्यासाठी तुमचा पहिला पत्ता जोडा",
+    addFirstAddress: "तुमचा पहिला पत्ता जोडा"
+  }
+};
+
 function Addresses() {
+  const [currentLanguage, setCurrentLanguage] = useState('en');
+  
+  // Get language preference from localStorage
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    if (savedLanguage && addressesTranslations[savedLanguage]) {
+      setCurrentLanguage(savedLanguage);
+    }
+    
+    // Listen for language changes
+    const handleLanguageChange = () => {
+      const lang = localStorage.getItem('preferredLanguage');
+      if (lang && addressesTranslations[lang]) {
+        setCurrentLanguage(lang);
+      }
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => window.removeEventListener('languageChanged', handleLanguageChange);
+  }, []);
+
   // Sample initial addresses data
   const [addresses, setAddresses] = useState([
     {
@@ -42,7 +115,7 @@ function Addresses() {
 
   // Function to handle address deletion
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this address?")) {
+    if (window.confirm(addressesTranslations[currentLanguage].deleteConfirm)) {
       setAddresses(addresses.filter(address => address.id !== id));
     }
   };
@@ -64,19 +137,28 @@ function Addresses() {
     }
   };
 
+  // Function to get translated address type
+  const getTranslatedAddressType = (type) => {
+    switch(type) {
+      case "home": return addressesTranslations[currentLanguage].home;
+      case "work": return addressesTranslations[currentLanguage].work;
+      default: return addressesTranslations[currentLanguage].other;
+    }
+  };
+
   return (
     <div className="did-addresses-container">
       <div className="did-addresses-header">
         <div className="did-header-content">
           <div className="did-header-title">
             <MapPin size={32} className="did-map-pin-icon" />
-            <h1>My Addresses</h1>
+            <h1 className="multilingual-text">{addressesTranslations[currentLanguage].title}</h1>
           </div>
-          <p className="did-header-subtitle">Manage your delivery and pickup locations</p>
+          <p className="did-header-subtitle multilingual-text">{addressesTranslations[currentLanguage].subtitle}</p>
         </div>
         <button className="did-add-address-btn">
           <Plus size={20} />
-          Add New Address
+          <span className="multilingual-text">{addressesTranslations[currentLanguage].addAddress}</span>
         </button>
       </div>
 
@@ -88,12 +170,12 @@ function Addresses() {
                 <div className="did-address-card-header">
                   <div className="did-address-type">
                     {getAddressTypeIcon(address.type)}
-                    <span>{address.type.charAt(0).toUpperCase() + address.type.slice(1)}</span>
+                    <span className="multilingual-text">{getTranslatedAddressType(address.type)}</span>
                   </div>
                   {address.isDefault ? (
                     <div className="did-default-badge">
                       <Star size={14} fill="currentColor" />
-                      Default
+                      <span className="multilingual-text">{addressesTranslations[currentLanguage].default}</span>
                     </div>
                   ) : null}
                 </div>
@@ -109,14 +191,14 @@ function Addresses() {
                   <div className="did-action-buttons">
                     <button 
                       className="did-action-btn did-edit-address-btn"
-                      aria-label="Edit address"
+                      aria-label={addressesTranslations[currentLanguage].edit}
                     >
                       <Edit size={18} />
                     </button>
                     <button 
                       className="did-action-btn did-delete-address-btn"
                       onClick={() => handleDelete(address.id)}
-                      aria-label="Delete address"
+                      aria-label={addressesTranslations[currentLanguage].delete}
                     >
                       <Trash2 size={18} />
                     </button>
@@ -128,7 +210,7 @@ function Addresses() {
                       onClick={() => setDefaultAddress(address.id)}
                     >
                       <Star size={16} />
-                      Set as Default
+                      <span className="multilingual-text">{addressesTranslations[currentLanguage].setDefault}</span>
                     </button>
                   )}
                 </div>
@@ -140,11 +222,11 @@ function Addresses() {
             <div className="did-empty-icon">
               <MapPin size={64} />
             </div>
-            <h2>No addresses saved yet</h2>
-            <p>Add your first address to get started with DID Online services</p>
+            <h2 className="multilingual-text">{addressesTranslations[currentLanguage].emptyTitle}</h2>
+            <p className="multilingual-text">{addressesTranslations[currentLanguage].emptySubtitle}</p>
             <button className="did-add-first-address-btn">
               <Plus size={20} />
-              Add Your First Address
+              <span className="multilingual-text">{addressesTranslations[currentLanguage].addFirstAddress}</span>
             </button>
           </div>
         )}
