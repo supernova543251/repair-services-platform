@@ -296,3 +296,94 @@
     padding: 16px;
   }
 }
+
+/* Additional styles for AddressForm.css */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* Phone input styling */
+.phone-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.phone-prefix {
+  background: #f8f9fa;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  color: #666;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.phone-input {
+  border-radius: 0 8px 8px 0;
+  flex: 1;
+}
+
+/* Form row for city and state */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Textarea styling */
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* Contact info in address list */
+.al-contact-info {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+
+.al-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.al-contact-item svg {
+  flex-shrink: 0;
+}
+
+.al-address-text {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .al-contact-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

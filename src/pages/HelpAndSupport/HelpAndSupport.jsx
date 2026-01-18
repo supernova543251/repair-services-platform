@@ -1,368 +1,371 @@
-import React, { useState, useEffect } from 'react'
-import './HelpAndSupport.css'
-import { LifeBuoy, Search, MessageCircle, Mail, Phone, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
+import React, { useState, useEffect } from 'react';
+import "./HelpAndSupport.css";
+import { Phone, MessageCircle, AlertCircle, ShieldCheck, FileText, HelpCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-// Translation data
-const helpTranslations = {
+// Translations
+const translations = {
   en: {
-    title: "Help & Support",
-    subtitle: "Get assistance with your smartphone repair orders and find answers to common questions",
-    searchPlaceholder: "Search for help topics, questions, or guides...",
-    contactSupport: "Contact Support",
-    liveChat: "Live Chat",
-    liveChatDesc: "Get instant help from our support team",
-    startChat: "Start Chat",
-    emailSupport: "Email Support",
-    emailSupportDesc: "Send us a detailed message",
-    sendEmail: "Send Email",
-    phoneSupport: "Phone Support",
-    phoneSupportDesc: "Call us directly",
+    headerTitle: "Help & Support",
+    headerSubtitle: "Quick assistance for repair issues and warranty claims",
+    whatsappTitle: "WhatsApp Support",
+    whatsappDesc: "Send details and photos",
+    responseTime: "Fast Response",
+    startWhatsapp: "Start Chat",
+    callTitle: "Call Support",
+    callDesc: "Talk directly with our team",
+    availableTime: "Always Available",
     callNow: "Call Now",
-    faqs: "Frequently Asked Questions",
-    troubleshootingGuides: "Troubleshooting Guides",
-    readFullGuide: "Read Full Guide",
-    supportTickets: "Your Support Tickets",
-    viewDetails: "View Details",
-    resolved: "Resolved",
-    inProgress: "In Progress",
-    // FAQ questions and answers
-    faq1Question: "How long does a typical smartphone repair take?",
-    faq1Answer: "Most repairs are completed within 1-2 business days. Screen replacements and battery changes are usually done same-day if parts are available.",
-    faq2Question: "What types of smartphone repairs do you offer?",
-    faq2Answer: "We offer screen replacements, battery changes, camera repairs, charging port fixes, water damage restoration, and software issues resolution.",
-    faq3Question: "Do you provide warranty on repairs?",
-    faq3Answer: "Yes, all our repairs come with a 90-day warranty covering both parts and labor.",
-    faq4Question: "How can I track my repair status?",
-    faq4Answer: "You can track your repair status through your account dashboard or by contacting our support team directly.",
-    faq5Question: "What payment methods do you accept?",
-    faq5Answer: "We accept credit/debit cards, PayPal, and bank transfers. Payment is due upon completion of the repair.",
-    // Troubleshooting guides
-    guide1Title: "Phone Not Turning On",
-    guide1Desc: "Troubleshoot power issues and battery problems",
-    guide1Steps: ["Check charging cable", "Try different power outlet", "Perform hard reset"],
-    guide2Title: "Screen Responsiveness Issues",
-    guide2Desc: "Fix unresponsive touch screens",
-    guide2Steps: ["Clean screen", "Remove screen protector", "Check for software updates"],
-    guide3Title: "Battery Draining Quickly",
-    guide3Desc: "Improve battery life and performance",
-    guide3Steps: ["Check battery usage", "Close background apps", "Update operating system"],
-    // Support tickets
-    ticket1Subject: "Screen replacement inquiry",
-    ticket2Subject: "Battery draining quickly after repair"
+    supportedIssues: "Supported Issues",
+    issueNotFixed: "Issue Not Fixed",
+    newProblem: "New Problem After Repair",
+    warrantyClaim: "Warranty Claim",
+    whatToShare: "What to Share",
+    invoiceAvailable: "With Invoice",
+    invoiceAvailableItems: {
+      item1: "Invoice or Order ID",
+      item2: "Issue description",
+      item3: "Photos if needed"
+    },
+    invoiceUnavailable: "Without Invoice",
+    invoiceUnavailableItems: {
+      item1: "Your full name",
+      item2: "Phone number",
+      item3: "Device model",
+      item4: "Issue details",
+      item5: "Photos/videos"
+    },
+    findOrder: "Find your Order ID",
+    viewOrders: "View Orders",
+    warrantyNote: "Warranty Claims",
+    warrantyTip: "Mention 'warranty claim' and share details above",
+    step1: "Choose contact method",
+    step2: "Select issue type",
+    step3: "Share details"
   },
   hi: {
-    title: "सहायता और समर्थन",
-    subtitle: "अपने स्मार्टफोन मरम्मत ऑर्डर के साथ सहायता प्राप्त करें और सामान्य प्रश्नों के उत्तर खोजें",
-    searchPlaceholder: "सहायता विषयों, प्रश्नों या गाइडों के लिए खोजें...",
-    contactSupport: "समर्थन से संपर्क करें",
-    liveChat: "लाइव चैट",
-    liveChatDesc: "हमारी सहायता टीम से तत्काल सहायता प्राप्त करें",
-    startChat: "चैट शुरू करें",
-    emailSupport: "ईमेल समर्थन",
-    emailSupportDesc: "हमें एक विस्तृत संदेश भेजें",
-    sendEmail: "ईमेल भेजें",
-    phoneSupport: "फोन समर्थन",
-    phoneSupportDesc: "हमें सीधे कॉल करें",
-    callNow: "अभी कॉल करें",
-    faqs: "अक्सर पूछे जाने वाले प्रश्न",
-    troubleshootingGuides: "समस्या निवारण गाइड",
-    readFullGuide: "पूरी गाइड पढ़ें",
-    supportTickets: "आपके सहायता टिकट",
-    viewDetails: "विवरण देखें",
-    resolved: "हल",
-    inProgress: "प्रगति में",
-    // FAQ questions and answers
-    faq1Question: "एक सामान्य स्मार्टफोन मरम्मत में कितना समय लगता है?",
-    faq1Answer: "अधिकांश मरम्मत 1-2 व्यावसायिक दिनों के भीतर पूरी हो जाती हैं। स्क्रीन प्रतिस्थापन और बैटरी परिवर्तन आमतौर पर उसी दिन किए जाते हैं यदि पुर्जे उपलब्ध हैं।",
-    faq2Question: "आप किस प्रकार की स्मार्टफोन मरम्मत की पेशकश करते हैं?",
-    faq2Answer: "हम स्क्रीन प्रतिस्थापन, बैटरी परिवर्तन, कैमरा मरम्मत, चार्जिंग पोर्ट ठीक, पानी की क्षति बहाली और सॉफ्टवेयर मुद्दों का समाधान प्रदान करते हैं।",
-    faq3Question: "क्या आप मरम्मत पर वारंटी प्रदान करते हैं?",
-    faq3Answer: "हां, हमारी सभी मरम्मतों पर 90-दिन की वारंटी आती है जिसमें पुर्जे और श्रम दोनों शामिल हैं।",
-    faq4Question: "मैं अपनी मरम्मत स्थिति कैसे ट्रैक कर सकता हूं?",
-    faq4Answer: "आप अपने खाता डैशबोर्ड के माध्यम से या सीधे हमारी सहायता टीम से संपर्क करके अपनी मरम्मत स्थिति ट्रैक कर सकते हैं।",
-    faq5Question: "आप कौन से भुगतान तरीके स्वीकार करते हैं?",
-    faq5Answer: "हम क्रेडिट/डेबिट कार्ड, PayPal, और बैंक ट्रांसफर स्वीकार करते हैं। मरम्मत पूरा होने पर भुगतान देय है।",
-    // Troubleshooting guides
-    guide1Title: "फोन चालू नहीं हो रहा",
-    guide1Desc: "बिजली के मुद्दों और बैटरी समस्याओं का समस्या निवारण करें",
-    guide1Steps: ["चार्जिंग केबल जांचें", "अलग पावर आउटलेट आज़माएं", "हार्ड रीसेट करें"],
-    guide2Title: "स्क्रीन प्रतिक्रियाशीलता के मुद्दे",
-    guide2Desc: "अनुत्तरदायी टच स्क्रीन ठीक करें",
-    guide2Steps: ["स्क्रीन साफ करें", "स्क्रीन प्रोटेक्टर हटाएं", "सॉफ्टवेयर अपडेट के लिए जांचें"],
-    guide3Title: "बैटरी तेजी से खत्म हो रही",
-    guide3Desc: "बैटरी जीवन और प्रदर्शन में सुधार करें",
-    guide3Steps: ["बैटरी उपयोग जांचें", "पृष्ठभूमि ऐप्स बंद करें", "ऑपरेटिंग सिस्टम अपडेट करें"],
-    // Support tickets
-    ticket1Subject: "स्क्रीन प्रतिस्थापन पूछताछ",
-    ticket2Subject: "मरम्मत के बाद बैटरी तेजी से खत्म हो रही"
+    headerTitle: "सहायता और समर्थन",
+    headerSubtitle: "मरम्मत समस्याओं और वारंटी दावों के लिए त्वरित सहायता",
+    whatsappTitle: "WhatsApp समर्थन",
+    whatsappDesc: "विवरण और फोटो भेजें",
+    responseTime: "त्वरित प्रतिक्रिया",
+    startWhatsapp: "चैट शुरू करें",
+    callTitle: "कॉल समर्थन",
+    callDesc: "सीधे हमारी टीम से बात करें",
+    availableTime: "हमेशा उपलब्ध",
+    callNow: "कॉल करें",
+    supportedIssues: "समर्थित समस्याएं",
+    issueNotFixed: "समस्या ठीक नहीं हुई",
+    newProblem: "मरम्मत के बाद नई समस्या",
+    warrantyClaim: "वारंटी दावा",
+    whatToShare: "क्या साझा करें",
+    invoiceAvailable: "इनवॉइस के साथ",
+    invoiceAvailableItems: {
+      item1: "इनवॉइस या ऑर्डर आईडी",
+      item2: "समस्या विवरण",
+      item3: "फोटो यदि आवश्यक"
+    },
+    invoiceUnavailable: "बिना इनवॉइस के",
+    invoiceUnavailableItems: {
+      item1: "आपका पूरा नाम",
+      item2: "फोन नंबर",
+      item3: "डिवाइस मॉडल",
+      item4: "समस्या विवरण",
+      item5: "फोटो/वीडियो"
+    },
+    findOrder: "ऑर्डर आईडी ढूंढें",
+    viewOrders: "ऑर्डर देखें",
+    warrantyNote: "वारंटी दावे",
+    warrantyTip: "'वारंटी दावा' का उल्लेख करें और विवरण साझा करें",
+    step1: "संपर्क विधि चुनें",
+    step2: "समस्या प्रकार चुनें",
+    step3: "विवरण साझा करें"
   },
   mr: {
-    title: "मदत आणि समर्थन",
-    subtitle: "तुमच्या स्मार्टफोन दुरुस्ती ऑर्डरसाठी मदत मिळवा आणि सामान्य प्रश्नांची उत्तरे शोधा",
-    searchPlaceholder: "मदत विषय, प्रश्न किंवा मार्गदर्शकांसाठी शोधा...",
-    contactSupport: "समर्थनाशी संपर्क साधा",
-    liveChat: "लाइव चॅट",
-    liveChatDesc: "आमच्या समर्थन संघाकडून त्वरित मदत मिळवा",
-    startChat: "चॅट सुरू करा",
-    emailSupport: "ईमेल समर्थन",
-    emailSupportDesc: "आम्हाला एक तपशीलवार संदेश पाठवा",
-    sendEmail: "ईमेल पाठवा",
-    phoneSupport: "फोन समर्थन",
-    phoneSupportDesc: "आम्हाला थेट कॉल करा",
-    callNow: "आत्ताच कॉल करा",
-    faqs: "वारंवार विचारले जाणारे प्रश्न",
-    troubleshootingGuides: "समस्या निवारण मार्गदर्शक",
-    readFullGuide: "संपूर्ण मार्गदर्शक वाचा",
-    supportTickets: "तुमचे समर्थन तिकीट",
-    viewDetails: "तपशील पहा",
-    resolved: "सोडवले",
-    inProgress: "प्रगतीत",
-    // FAQ questions and answers
-    faq1Question: "एका सामान्य स्मार्टफोन दुरुस्तीला किती वेळ लागतो?",
-    faq1Answer: "बहुतेक दुरुस्त्या 1-2 व्यावसायिक दिवसात पूर्ण होतात. स्क्रीन रिप्लेसमेंट आणि बॅटरी बदल सहसा त्याच दिवशी केले जातात जर पार्ट्स उपलब्ध असतील.",
-    faq2Question: "तुम्ही कोणत्या प्रकारच्या स्मार्टफोन दुरुस्त्या देतात?",
-    faq2Answer: "आम्ही स्क्रीन रिप्लेसमेंट, बॅटरी बदल, कॅमेरा दुरुस्ती, चार्जिंग पोर्ट फिक्स, वॉटर डॅमेज रेस्टोरेशन आणि सॉफ्टवेअर इश्यू रेझोल्यूशन देतो.",
-    faq3Question: "तुम्ही दुरुस्तीवर वॉरंटी देतात का?",
-    faq3Answer: "होय, आमच्या सर्व दुरुस्त्यांवर 90-दिवसांची वॉरंटी येते ज्यामध्ये पार्ट्स आणि लेबर दोन्ही समाविष्ट असतात.",
-    faq4Question: "मी माझी दुरुस्ती स्थिती कशी ट्रॅक करू शकतो?",
-    faq4Answer: "तुम्ही तुमच्या अकाउंट डॅशबोर्डद्वारे किंवा आमच्या समर्थन संघाशी थेट संपर्क साधून तुमची दुरुस्ती स्थिती ट्रॅक करू शकता.",
-    faq5Question: "तुम्ही कोणत्या पेमेंट पद्धती स्वीकारता?",
-    faq5Answer: "आम्ही क्रेडिट/डेबिट कार्ड, PayPal, आणि बँक ट्रान्सफर स्वीकारतो. दुरुस्ती पूर्ण झाल्यावर पेमेंट देय असते.",
-    // Troubleshooting guides
-    guide1Title: "फोन चालू होत नाही",
-    guide1Desc: "वीज समस्या आणि बॅटरी समस्यांचे निवारण करा",
-    guide1Steps: ["चार्जिंग केबल तपासा", "वेगळा पॉवर आउटलेट वापरून पहा", "हार्ड रीसेट करा"],
-    guide2Title: "स्क्रीन रिस्पॉन्सिव्हनेस समस्या",
-    guide2Desc: "अनुत्तरदायी टच स्क्रीन दुरुस्त करा",
-    guide2Steps: ["स्क्रीन स्वच्छ करा", "स्क्रीन प्रोटेक्टर काढा", "सॉफ्टवेअर अपडेट्स तपासा"],
-    guide3Title: "बॅटरी त्वरीत संपते",
-    guide3Desc: "बॅटरी आयुष्य आणि कार्यक्षमता सुधारा",
-    guide3Steps: ["बॅटरी वापर तपासा", "बॅकग्राउंड अॅप्स बंद करा", "ऑपरेटिंग सिस्टम अपडेट करा"],
-    // Support tickets
-    ticket1Subject: "स्क्रीन रिप्लेसमेंट चौकशी",
-    ticket2Subject: "दुरुस्तीनंतर बॅटरी त्वरीत संपते"
+    headerTitle: "मदत आणि समर्थन",
+    headerSubtitle: "दुरुस्ती समस्या आणि हमी दाव्यांसाठी द्रुत सहाय्य",
+    whatsappTitle: "WhatsApp समर्थन",
+    whatsappDesc: "तपशील आणि फोटो पाठवा",
+    responseTime: "द्रुत प्रतिसाद",
+    startWhatsapp: "चॅट सुरू करा",
+    callTitle: "कॉल समर्थन",
+    callDesc: "थेट आमच्या संघाशी बोला",
+    availableTime: "नेहमी उपलब्ध",
+    callNow: "कॉल करा",
+    supportedIssues: "समर्थित समस्या",
+    issueNotFixed: "समस्या निश्चित केली नाही",
+    newProblem: "दुरुस्तीनंतर नवीन समस्या",
+    warrantyClaim: "हमी दावा",
+    whatToShare: "काय सामायिक करावे",
+    invoiceAvailable: "बीजकासह",
+    invoiceAvailableItems: {
+      item1: "बीजक किंवा ऑर्डर आयडी",
+      item2: "समस्येचे वर्णन",
+      item3: "फोटो आवश्यक असल्यास"
+    },
+    invoiceUnavailable: "बीजकाशिवाय",
+    invoiceUnavailableItems: {
+      item1: "तुमचे पूर्ण नाव",
+      item2: "फोन नंबर",
+      item3: "डिव्हाइस मॉडेल",
+      item4: "समस्येचे तपशील",
+      item5: "फोटो/व्हिडिओ"
+    },
+    findOrder: "ऑर्डर आयडी शोधा",
+    viewOrders: "ऑर्डर पहा",
+    warrantyNote: "हमी दावे",
+    warrantyTip: "'हमी दावा' उल्लेख करा आणि तपशील सामायिक करा",
+    step1: "संपर्क पद्धत निवडा",
+    step2: "समस्येचा प्रकार निवडा",
+    step3: "तपशील सामायिक करा"
   }
 };
 
-function HelpAndSupport() {
-  const [currentLanguage, setCurrentLanguage] = useState('en');
-  const [activeFaq, setActiveFaq] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('')
+const detectLanguage = () => {
+  const savedLanguage = localStorage.getItem('preferredLanguage');
+  if (savedLanguage && translations[savedLanguage]) {
+    return savedLanguage;
+  }
+  
+  const browserLang = navigator.language || navigator.userLanguage;
+  if (browserLang.startsWith('hi') || browserLang.startsWith('hi-IN')) {
+    return 'hi';
+  }
+  if (browserLang.startsWith('mr') || browserLang.startsWith('mr-IN')) {
+    return 'mr';
+  }
+  
+  return 'en';
+};
 
-  // Get language preference from localStorage
+function HelpAndSupport() {
+  const navigate = useNavigate();
+  const [currentLanguage, setCurrentLanguage] = useState(detectLanguage());
+  
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferredLanguage');
-    if (savedLanguage && helpTranslations[savedLanguage]) {
-      setCurrentLanguage(savedLanguage);
-    }
-    
-    // Listen for language changes
     const handleLanguageChange = () => {
-      const lang = localStorage.getItem('preferredLanguage');
-      if (lang && helpTranslations[lang]) {
-        setCurrentLanguage(lang);
+      const newLang = localStorage.getItem('preferredLanguage') || 'en';
+      if (translations[newLang]) {
+        setCurrentLanguage(newLang);
       }
     };
     
     window.addEventListener('languageChanged', handleLanguageChange);
-    return () => window.removeEventListener('languageChanged', handleLanguageChange);
+    handleLanguageChange();
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
   }, []);
+  
+  const t = translations[currentLanguage];
 
-  // Sample FAQ data
-  const faqs = [
+  const handleCall = () => {
+    window.open('tel:+1234567890', '_self');
+  };
+
+  const handleWhatsApp = () => {
+    window.open('https://wa.me/1234567890?text=Hello%20FixFlash%20Support%2C%20I%20need%20help%20with%3A', '_blank');
+  };
+
+  const handleViewOrders = () => {
+    navigate('/your-orders');
+  };
+
+  const supportIssues = [
     {
-      id: 1,
-      question: helpTranslations[currentLanguage].faq1Question,
-      answer: helpTranslations[currentLanguage].faq1Answer
+      title: t.issueNotFixed,
+      icon: <AlertCircle size={20} />,
+      color: "#ef4444"
     },
     {
-      id: 2,
-      question: helpTranslations[currentLanguage].faq2Question,
-      answer: helpTranslations[currentLanguage].faq2Answer
+      title: t.newProblem,
+      icon: <AlertCircle size={20} />,
+      color: "#f97316"
     },
     {
-      id: 3,
-      question: helpTranslations[currentLanguage].faq3Question,
-      answer: helpTranslations[currentLanguage].faq3Answer
-    },
-    {
-      id: 4,
-      question: helpTranslations[currentLanguage].faq4Question,
-      answer: helpTranslations[currentLanguage].faq4Answer
-    },
-    {
-      id: 5,
-      question: helpTranslations[currentLanguage].faq5Question,
-      answer: helpTranslations[currentLanguage].faq5Answer
+      title: t.warrantyClaim,
+      icon: <ShieldCheck size={20} />,
+      color: "#10b981"
     }
-  ]
-
-  // Sample support tickets
-  const supportTickets = [
-    {
-      id: 101,
-      subject: helpTranslations[currentLanguage].ticket1Subject,
-      status: helpTranslations[currentLanguage].resolved,
-      date: "2024-01-15"
-    },
-    {
-      id: 102,
-      subject: helpTranslations[currentLanguage].ticket2Subject,
-      status: helpTranslations[currentLanguage].inProgress,
-      date: "2024-01-20"
-    }
-  ]
-
-  // Sample troubleshooting guides
-  const guides = [
-    {
-      title: helpTranslations[currentLanguage].guide1Title,
-      description: helpTranslations[currentLanguage].guide1Desc,
-      steps: helpTranslations[currentLanguage].guide1Steps
-    },
-    {
-      title: helpTranslations[currentLanguage].guide2Title,
-      description: helpTranslations[currentLanguage].guide2Desc,
-      steps: helpTranslations[currentLanguage].guide2Steps
-    },
-    {
-      title: helpTranslations[currentLanguage].guide3Title,
-      description: helpTranslations[currentLanguage].guide3Desc,
-      steps: helpTranslations[currentLanguage].guide3Steps
-    }
-  ]
-
-  const toggleFaq = (id) => {
-    setActiveFaq(activeFaq === id ? null : id)
-  }
-
-  const filteredFaqs = faqs.filter(faq => 
-    faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  ];
 
   return (
-    <div className="did-help-support-container">
+    <div className="help-support-page">
       {/* Header Section */}
-      <header className="did-help-header">
-        <div className="did-header-content">
-          <LifeBuoy className="did-header-icon" size={32} />
-          <h1 className="did-main-title multilingual-text">{helpTranslations[currentLanguage].title}</h1>
-          <p className="did-header-description multilingual-text">{helpTranslations[currentLanguage].subtitle}</p>
-        </div>
-      </header>
-
-      {/* Search Bar */}
-      <div className="did-search-section">
-        <div className="did-search-container">
-          <Search className="did-search-icon" size={20} />
-          <input
-            type="text"
-            placeholder={helpTranslations[currentLanguage].searchPlaceholder}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="did-search-input multilingual-text"
-          />
+      <div className="support-header">
+        <div className="header-content">
+          <HelpCircle className="header-icon" size={36} />
+          <h1 className="header-title">{t.headerTitle}</h1>
+          <p className="header-subtitle">
+            {t.headerSubtitle}
+          </p>
         </div>
       </div>
 
-      <div className="did-help-content">
-        {/* Contact Support Section */}
-        <section className="did-support-section">
-          <h2 className="did-section-title multilingual-text">{helpTranslations[currentLanguage].contactSupport}</h2>
-          <div className="did-contact-cards">
-            <div className="did-contact-card">
-              <MessageCircle className="did-contact-icon" size={24} />
-              <h3 className="did-contact-title multilingual-text">{helpTranslations[currentLanguage].liveChat}</h3>
-              <p className="did-contact-description multilingual-text">{helpTranslations[currentLanguage].liveChatDesc}</p>
-              <button className="did-contact-btn multilingual-text">{helpTranslations[currentLanguage].startChat}</button>
-            </div>
-            
-            <div className="did-contact-card">
-              <Mail className="did-contact-icon" size={24} />
-              <h3 className="did-contact-title multilingual-text">{helpTranslations[currentLanguage].emailSupport}</h3>
-              <p className="did-contact-description multilingual-text">{helpTranslations[currentLanguage].emailSupportDesc}</p>
-              <button className="did-contact-btn multilingual-text">{helpTranslations[currentLanguage].sendEmail}</button>
-            </div>
-            
-            <div className="did-contact-card">
-              <Phone className="did-contact-icon" size={24} />
-              <h3 className="did-contact-title multilingual-text">{helpTranslations[currentLanguage].phoneSupport}</h3>
-              <p className="did-contact-description multilingual-text">{helpTranslations[currentLanguage].phoneSupportDesc}</p>
-              <button className="did-contact-btn multilingual-text">{helpTranslations[currentLanguage].callNow}</button>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs Section */}
-        <section className="did-faq-section">
-          <h2 className="did-section-title multilingual-text">{helpTranslations[currentLanguage].faqs}</h2>
-          <div className="did-faq-list">
-            {filteredFaqs.map(faq => (
-              <div key={faq.id} className="did-faq-item">
-                <button 
-                  className="did-faq-question"
-                  onClick={() => toggleFaq(faq.id)}
-                >
-                  <span className="did-faq-text multilingual-text">{faq.question}</span>
-                  {activeFaq === faq.id ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                {activeFaq === faq.id && (
-                  <div className="did-faq-answer">
-                    <p className="multilingual-text">{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Troubleshooting Guides */}
-        <section className="did-guides-section">
-          <h2 className="did-section-title multilingual-text">{helpTranslations[currentLanguage].troubleshootingGuides}</h2>
-          <div className="did-guides-grid">
-            {guides.map((guide, index) => (
-              <div key={index} className="did-guide-card">
-                <h3 className="did-guide-title multilingual-text">{guide.title}</h3>
-                <p className="did-guide-description multilingual-text">{guide.description}</p>
-                <ul className="did-guide-steps">
-                  {guide.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="did-guide-step multilingual-text">{step}</li>
-                  ))}
-                </ul>
-                <button className="did-guide-btn">
-                  <span className="multilingual-text">{helpTranslations[currentLanguage].readFullGuide}</span> <ExternalLink size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Support Tickets Section */}
-        {supportTickets.length > 0 && (
-          <section className="did-tickets-section">
-            <h2 className="did-section-title multilingual-text">{helpTranslations[currentLanguage].supportTickets}</h2>
-            <div className="did-tickets-list">
-              {supportTickets.map(ticket => (
-                <div key={ticket.id} className="did-ticket-item">
-                  <div className="did-ticket-info">
-                    <h4 className="did-ticket-subject multilingual-text">{ticket.subject}</h4>
-                    <span className={`did-ticket-status did-status-${ticket.status.toLowerCase().replace(' ', '-')}`}>
-                      <span className="multilingual-text">{ticket.status}</span>
-                    </span>
-                  </div>
-                  <div className="did-ticket-date">
-                    {new Date(ticket.date).toLocaleDateString()}
-                  </div>
-                  <button className="did-view-ticket-btn multilingual-text">{helpTranslations[currentLanguage].viewDetails}</button>
+      {/* Main Content */}
+      <div className="support-container">
+        {/* Contact Options - Only WhatsApp and Call */}
+        <div className="contact-section">
+          <div className="contact-cards">
+            {/* WhatsApp Card */}
+            <div className="contact-card whatsapp-card" onClick={handleWhatsApp}>
+              <div className="card-content">
+                <div className="card-icon whatsapp-icon">
+                  <MessageCircle size={28} />
                 </div>
-              ))}
+                <div className="card-text">
+                  <h3 className="card-title">{t.whatsappTitle}</h3>
+                  <p className="card-description">
+                    {t.whatsappDesc}
+                  </p>
+                </div>
+              </div>
+              <div className="card-response">
+                <span className="response-time">{t.responseTime}</span>
+              </div>
+              <button className="card-button whatsapp-button">
+                {t.startWhatsapp}
+              </button>
             </div>
-          </section>
-        )}
+
+            {/* Call Support Card */}
+            <div className="contact-card call-card" onClick={handleCall}>
+              <div className="card-content">
+                <div className="card-icon call-icon">
+                  <Phone size={28} />
+                </div>
+                <div className="card-text">
+                  <h3 className="card-title">{t.callTitle}</h3>
+                  <p className="card-description">
+                    {t.callDesc}
+                  </p>
+                </div>
+              </div>
+              <div className="card-response">
+                <span className="response-time">{t.availableTime}</span>
+              </div>
+              <button className="card-button call-button">
+                {t.callNow}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Supported Issues */}
+        <div className="issues-section">
+          <h2 className="section-title">{t.supportedIssues}</h2>
+          
+          <div className="issues-grid">
+            {supportIssues.map((issue, index) => (
+              <div key={index} className="issue-card" style={{ borderTopColor: issue.color }}>
+                <div className="issue-icon" style={{ color: issue.color }}>
+                  {issue.icon}
+                </div>
+                <h3 className="issue-title">{issue.title}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* What to Share */}
+        <div className="share-section">
+          <h2 className="section-title">{t.whatToShare}</h2>
+          <div className="share-cards">
+            {/* If Invoice Available */}
+            <div className="share-card primary-card">
+              <div className="share-card-header">
+                <FileText size={20} className="share-icon" />
+                <h3 className="share-card-title">{t.invoiceAvailable}</h3>
+              </div>
+              <div className="share-items">
+                <div className="share-item">
+                  <div className="item-check">✓</div>
+                  <span className="item-text">{t.invoiceAvailableItems.item1}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-check">✓</div>
+                  <span className="item-text">{t.invoiceAvailableItems.item2}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-check">✓</div>
+                  <span className="item-text">{t.invoiceAvailableItems.item3}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* If Invoice Not Available */}
+            <div className="share-card secondary-card">
+              <div className="share-card-header">
+                <AlertCircle size={20} className="share-icon" />
+                <h3 className="share-card-title">{t.invoiceUnavailable}</h3>
+              </div>
+              <div className="share-items">
+                <div className="share-item">
+                  <div className="item-number">1</div>
+                  <span className="item-text">{t.invoiceUnavailableItems.item1}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-number">2</div>
+                  <span className="item-text">{t.invoiceUnavailableItems.item2}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-number">3</div>
+                  <span className="item-text">{t.invoiceUnavailableItems.item3}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-number">4</div>
+                  <span className="item-text">{t.invoiceUnavailableItems.item4}</span>
+                </div>
+                <div className="share-item">
+                  <div className="item-number">5</div>
+                  <span className="item-text">{t.invoiceUnavailableItems.item5}</span>
+                </div>
+                <div className="invoice-help">
+                  <p className="help-text">
+                    <FileText size={16} />
+                    <span>{t.findOrder}</span>
+                  </p>
+                  <button className="view-orders-button" onClick={handleViewOrders}>
+                    {t.viewOrders}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Warranty Quick Note */}
+        <div className="warranty-tip">
+          <div className="tip-icon">
+            <ShieldCheck size={20} />
+          </div>
+          <div className="tip-content">
+            <h3 className="tip-title">{t.warrantyNote}</h3>
+            <p className="tip-text">
+              {t.warrantyTip}
+            </p>
+          </div>
+        </div>
+
+        {/* Quick Instructions */}
+        <div className="instructions">
+          <div className="instruction-step">
+            <div className="step-number">1</div>
+            <p className="step-text">{t.step1}</p>
+          </div>
+          <div className="instruction-step">
+            <div className="step-number">2</div>
+            <p className="step-text">{t.step2}</p>
+          </div>
+          <div className="instruction-step">
+            <div className="step-number">3</div>
+            <p className="step-text">{t.step3}</p>
+          </div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default HelpAndSupport
+export default HelpAndSupport;

@@ -25,7 +25,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* max-width: 1400px; */
   margin: 0 auto;
   padding: 0 24px;
   height: 100%;
@@ -51,7 +50,7 @@
   -webkit-text-fill-color: transparent;
   text-emphasis-color: transparent;
   display: inline-block;
-  padding: 0 5px;
+  padding-left: 20px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   background-size: 200% 200%;
   animation: golden-glow 4s ease infinite, gradient-pulse 6s ease infinite;
@@ -77,13 +76,32 @@
   gap: 8px;
   cursor: pointer;
   flex-direction: row;
-  padding: 0px 18px 0px 18px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+.location-selector:hover {
+  background-color: #f8fafc;
+}
+
+/* Disabled location selector for confirm order page */
+.location-selector-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.location-selector-disabled:hover {
+  background-color: transparent !important;
 }
 
 .delivery-info {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
+  min-width: 0;
+  flex: 1;
 }
 
 .delivery-tag {
@@ -91,6 +109,8 @@
   font-weight: 600;
   color: #111827;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .address-text {
@@ -98,6 +118,17 @@
   font-weight: 400;
   color: #6b7280;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* Location pin icon */
+.location-pin-icon {
+  color: #ef4444;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
 /* Search section */
@@ -147,7 +178,7 @@
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
-  padding-left: 20px;
+  padding: 0px 25px;
 }
 
 .action-button {
@@ -156,7 +187,7 @@
   gap: 6px;
   background: none;
   border: none;
-  padding: 8px 12px;
+  padding: 8px 0px;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
@@ -173,17 +204,6 @@
 
 .action-button .icon {
   font-size: 18px;
-}
-
-/* Test toggle button */
-.test-toggle {
-  background-color: #f0f9ff !important;
-  color: #0369a1 !important;
-  border: 1px solid #bae6fd !important;
-}
-
-.test-toggle:hover {
-  background-color: #e0f2fe !important;
 }
 
 /* Overlay backdrop */
@@ -236,19 +256,31 @@
     padding: 8px;
   }
 
-  /* Increased logo size for mobile */
+  /* Logo size for mobile */
   .futuristic-logo {
-    font-size: 26px; /* Increased from 22px */
+    font-size: 26px;
   }
 
-  /* Increased location font sizes for mobile */
+  /* Location font sizes for mobile */
   .delivery-tag {
-    font-size: 14px; /* Increased from 11px */
-    font-weight: 700; /* Slightly bolder */
+    font-size: 14px;
+    font-weight: 700;
   }
 
   .address-text {
-    font-size: 12px; /* Increased from 10px */
+    font-size: 12px;
+    max-width: 120px;
+  }
+
+  .location-selector {
+    padding: 6px 8px;
+    margin-left: 5px;
+    gap: 6px;
+  }
+
+  .location-pin-icon {
+    width: 14px;
+    height: 14px;
   }
 
   .main-content {
@@ -262,6 +294,10 @@
   .search-container {
     width: 300px;
   }
+  
+  .address-text {
+    max-width: 150px;
+  }
 }
 
 /* Small mobile devices */
@@ -270,13 +306,27 @@
     padding: 0 12px;
   }
 
-  /* Further increased sizes for very small devices */
   .futuristic-logo {
-    font-size: 25px; /* Increased from 20px */
+    font-size: 25px;
+    padding-left: 5px;
   }
 
   .location-selector {
-    padding: 0px;
+    padding: 4px 6px;
+    margin-left: 2px;
+  }
+
+  .delivery-tag {
+    font-size: 12px;
+  }
+
+  .address-text {
+    font-size: 10px;
+    max-width: 100px;
+  }
+
+  .navbar-brand {
+    gap: 4px;
   }
 
   .search-container {
@@ -287,11 +337,101 @@
     font-size: 16px;
   }
 
+  .navbar-actions {
+    padding: 0px;
+  }
+}
+
+/* Very small mobile devices */
+@media (max-width: 350px) {
+  .futuristic-logo {
+    font-size: 22px;
+  }
+
   .delivery-tag {
-    font-size: 13px; /* Increased from 10px */
+    font-size: 11px;
   }
 
   .address-text {
-    font-size: 11px; /* Increased from 9px */
+    font-size: 9px;
+    max-width: 80px;
+  }
+
+  .location-selector {
+    padding: 3px 4px;
+    margin-left: 1px;
+  }
+}
+
+/* Fix for touch devices */
+@media (hover: none) {
+  .action-button:hover,
+  .location-selector:hover {
+    background-color: transparent;
+    transform: none;
+  }
+  
+  .location-selector-disabled:hover {
+    background-color: transparent !important;
+  }
+}
+
+/* Prevent zoom on input focus for mobile */
+@media (max-width: 768px) {
+  select,
+  textarea,
+  input {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth scrolling */
+.modern-navbar {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+.action-button:focus,
+.location-selector:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Focus style for disabled location selector */
+.location-selector-disabled:focus {
+  outline: none;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .futuristic-logo {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .modern-navbar {
+    position: static;
+    box-shadow: none;
+    background: white;
+  }
+  
+  .search-container,
+  .location-selector,
+  .navbar-actions {
+    display: none;
+  }
+  
+  .futuristic-logo {
+    background: black;
+    -webkit-text-fill-color: black;
+    animation: none;
   }
 }

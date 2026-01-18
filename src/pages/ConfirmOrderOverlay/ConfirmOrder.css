@@ -1,0 +1,2121 @@
+/* Confirm Order Container */
+.fixflash-confirmorder-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  position: relative;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Overlay backdrop for LocationOverlay */
+.fixflash-confirmorder-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* When overlay is open, disable background scrolling */
+.fixflash-confirmorder-overlay-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Header Styles - Mobile First */
+.fixflash-confirmorder-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 1rem 0 1.5rem 0;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.fixflash-confirmorder-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: fixflash-confirmorder-shimmer 3s infinite;
+}
+
+@keyframes fixflash-confirmorder-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.fixflash-confirmorder-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.fixflash-confirmorder-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.fixflash-confirmorder-back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+}
+
+.fixflash-confirmorder-header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.fixflash-confirmorder-header-text {
+  text-align: center;
+}
+
+.fixflash-confirmorder-header-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fixflash-confirmorder-header-subtitle {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.fixflash-confirmorder-header-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.6rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.fixflash-confirmorder-header-icon svg {
+  color: white;
+  width: 20px;
+  height: 20px;
+}
+
+/* Order Details Container */
+.fixflash-confirmorder-details-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem 1rem;
+}
+
+.fixflash-confirmorder-content-wrapper {
+  width: 100%;
+}
+
+.fixflash-confirmorder-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.fixflash-confirmorder-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.fixflash-confirmorder-section-title svg {
+  color: #667eea;
+}
+
+/* Textarea Group Styles - NEW */
+.fixflash-confirmorder-textarea-group {
+  margin-bottom: 1rem;
+}
+
+.fixflash-confirmorder-textarea-group:last-child {
+  margin-bottom: 0;
+}
+
+.fixflash-confirmorder-textarea-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.fixflash-confirmorder-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background-color: white;
+  min-height: 80px;
+}
+
+.fixflash-confirmorder-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.fixflash-confirmorder-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.fixflash-confirmorder-textarea:disabled {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Required field indicator */
+.fixflash-confirmorder-textarea-label[for="issueDescription"]::after {
+  content: " *";
+  color: #ef4444;
+}
+
+/* Details Grid */
+.fixflash-confirmorder-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fixflash-confirmorder-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.fixflash-confirmorder-detail-item:last-child {
+  border-bottom: none;
+}
+
+.fixflash-confirmorder-detail-label {
+  font-weight: 500;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.fixflash-confirmorder-detail-value {
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fixflash-confirmorder-color-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+/* Custom Device Badge */
+.fixflash-confirmorder-custom-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 0.5rem;
+}
+
+/* No Color State */
+.fixflash-confirmorder-no-color {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Temporary Phone Section - VISIBLE DISABLED CHECKBOX WITH DISABLED STYLING */
+.fixflash-confirmorder-temporary-phone-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.fixflash-confirmorder-temporary-phone-wrapper {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f9fafb; /* Light grey background for disabled look */
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.fixflash-confirmorder-temporary-phone-wrapper:hover {
+  background: #f3f4f6; /* Slightly darker on hover */
+}
+
+.fixflash-confirmorder-temporary-phone-wrapper:active {
+  background: #f1f5f9;
+}
+
+.fixflash-confirmorder-temporary-phone-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  opacity: 0.7; /* Reduced opacity for disabled look */
+}
+
+.fixflash-confirmorder-temporary-phone-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.2rem;
+  border: 2px solid #9ca3af; /* Grey border */
+  border-radius: 4px;
+  background-color: #f3f4f6; /* Light grey background */
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.fixflash-confirmorder-temporary-phone-checkbox:checked {
+  background-color: #9ca3af; /* Grey when checked */
+  border-color: #9ca3af;
+}
+
+.fixflash-confirmorder-temporary-phone-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.fixflash-confirmorder-temporary-phone-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.fixflash-confirmorder-temporary-phone-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.fixflash-confirmorder-temporary-phone-title {
+  font-weight: 600;
+  color: #6b7280; /* Grey text color */
+  font-size: 0.95rem;
+}
+
+.fixflash-confirmorder-coming-soon-badge {
+  background: linear-gradient(135deg, #ffaa2a 20%, #ffcc80 80%);
+  color: #3d3d2e; /* Dark grey text */
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #ff7300;
+}
+
+.fixflash-confirmorder-temporary-phone-desc {
+  color: #9ca3af; /* Light grey text */
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.fixflash-confirmorder-temporary-phone-header svg {
+  color: #9ca3af; /* Grey icon */
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Services List */
+.fixflash-confirmorder-services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fixflash-confirmorder-service-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.fixflash-confirmorder-service-check-icon {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.fixflash-confirmorder-service-name {
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.fixflash-confirmorder-service-price {
+  font-weight: 600;
+  color: #059669;
+  font-size: 0.9rem;
+  background: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Payment Methods */
+.fixflash-confirmorder-payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fixflash-confirmorder-payment-option {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fixflash-confirmorder-payment-option-disabled {
+  background: #f1f5f9;
+  border-color: #22c55e;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.fixflash-confirmorder-payment-checkbox {
+  margin-right: 1rem;
+  width: 18px;
+  height: 18px;
+  cursor: not-allowed;
+}
+
+.fixflash-confirmorder-payment-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.fixflash-confirmorder-payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fixflash-confirmorder-payment-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.fixflash-confirmorder-payment-description {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.fixflash-confirmorder-payment-selected {
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+}
+
+/* Fixed Bottom Section - Mobile First */
+.fixflash-confirmorder-fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 1rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fixflash-confirmorder-fixed-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.fixflash-confirmorder-fixed-total {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.fixflash-confirmorder-fixed-total-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.fixflash-confirmorder-fixed-total-value {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* Button Container for Tooltip */
+.fixflash-confirmorder-button-container {
+  position: relative;
+  width: 100%;
+}
+
+.fixflash-confirmorder-fixed-confirm-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+  position: relative;
+}
+
+.fixflash-confirmorder-fixed-confirm-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.fixflash-confirmorder-fixed-confirm-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.fixflash-confirmorder-loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: fixflash-confirmorder-spin 1s linear infinite;
+}
+
+@keyframes fixflash-confirmorder-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disabled Tooltip */
+.fixflash-confirmorder-disabled-tooltip {
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fixflash-confirmorder-disabled-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #1e293b;
+}
+
+/* Address Section Styles */
+.fixflash-confirmorder-address-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fixflash-confirmorder-address-slot {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.fixflash-confirmorder-address-slot:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.fixflash-confirmorder-address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.fixflash-confirmorder-address-type {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.fixflash-confirmorder-change-address-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.fixflash-confirmorder-change-address-btn:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.fixflash-confirmorder-address-details {
+  color: #475569;
+  padding: 0.5rem 0;
+}
+
+.fixflash-confirmorder-address-name {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fixflash-confirmorder-address-phone {
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.fixflash-confirmorder-address-full {
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.fixflash-confirmorder-default-badge {
+  background: #22c55e;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fixflash-confirmorder-no-address-selected {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #64748b;
+  font-style: italic;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #e2e8f0;
+}
+
+/* Same Address Checkbox */
+.fixflash-confirmorder-same-address-checkbox {
+  background: #f0f7ff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.fixflash-confirmorder-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #1e40af;
+  margin: 0;
+}
+
+.fixflash-confirmorder-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid #3b82f6;
+  background: white;
+  cursor: pointer;
+}
+
+.fixflash-confirmorder-checkbox:checked {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.fixflash-confirmorder-checkbox-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* No Address State */
+.fixflash-confirmorder-no-address {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.fixflash-confirmorder-no-address-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px dashed #e2e8f0;
+}
+
+.fixflash-confirmorder-no-address-icon {
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.fixflash-confirmorder-no-address-text h3 {
+  margin: 0 0 0.5rem 0;
+  color: #475569;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.fixflash-confirmorder-no-address-text p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.fixflash-confirmorder-add-address-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.fixflash-confirmorder-add-address-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.fixflash-confirmorder-loading-addresses {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Inline Order Summary */
+.fixflash-confirmorder-inline-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fixflash-confirmorder-inline-total {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.fixflash-confirmorder-inline-total-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.fixflash-confirmorder-inline-total-value {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.fixflash-confirmorder-inline-confirm-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+  position: relative;
+}
+
+.fixflash-confirmorder-inline-confirm-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.fixflash-confirmorder-inline-confirm-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+/* Success State */
+.fixflash-confirmorder-success {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.fixflash-confirmorder-success-icon {
+  color: #22c55e;
+  margin-bottom: 1.5rem;
+  animation: fixflash-confirmorder-scaleIn 0.5s ease-out;
+}
+
+@keyframes fixflash-confirmorder-scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fixflash-confirmorder-success-title {
+  color: #22c55e;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.fixflash-confirmorder-success-message {
+  color: #64748b;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.fixflash-confirmorder-summary-success {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.fixflash-confirmorder-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.fixflash-confirmorder-summary-item:last-child {
+  border-bottom: none;
+}
+
+.fixflash-confirmorder-summary-total {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.fixflash-confirmorder-summary-label {
+  font-weight: 500;
+  color: #64748b;
+}
+
+.fixflash-confirmorder-summary-value {
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Success state custom device styling */
+.fixflash-confirmorder-summary-success .fixflash-confirmorder-custom-badge {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+.fixflash-confirmorder-success-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.fixflash-confirmorder-success-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* No Data State */
+.fixflash-confirmorder-no-data {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Tablet Devices (768px and up) */
+@media (min-width: 768px) {
+  .fixflash-confirmorder-header {
+    margin: 1rem auto 2rem auto;
+    padding: 1.5rem 2rem;
+    max-width: 1200px;
+    border-radius: 12px;
+  }
+
+  .fixflash-confirmorder-header-main {
+    max-width: 1200px;
+  }
+
+  .fixflash-confirmorder-header-title {
+    font-size: 1.8rem;
+  }
+
+  .fixflash-confirmorder-header-subtitle {
+    font-size: 1rem;
+  }
+
+  .fixflash-confirmorder-details-container {
+    max-width: 800px;
+    padding: 0 2rem 2rem 2rem;
+  }
+
+  .fixflash-confirmorder-content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .fixflash-confirmorder-fixed-bottom {
+    padding: 1rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .fixflash-confirmorder-fixed-content {
+    max-width: 800px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .fixflash-confirmorder-fixed-total {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    text-align: left;
+  }
+
+  .fixflash-confirmorder-fixed-total-label {
+    font-size: 1rem;
+  }
+
+  .fixflash-confirmorder-fixed-total-value {
+    font-size: 1.3rem;
+  }
+
+  .fixflash-confirmorder-fixed-confirm-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .fixflash-confirmorder-address-section {
+    gap: 1.5rem;
+  }
+  
+  .fixflash-confirmorder-address-slot {
+    padding: 1.25rem;
+  }
+
+  .fixflash-confirmorder-no-address-content {
+    padding: 3rem;
+  }
+
+  .fixflash-confirmorder-success {
+    max-width: 600px;
+  }
+
+  .fixflash-confirmorder-inline-summary {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .fixflash-confirmorder-inline-total {
+    flex: 1;
+    text-align: left;
+    padding: 1rem 1.5rem;
+  }
+
+  .fixflash-confirmorder-inline-confirm-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 0.875rem 1.5rem;
+  }
+
+  .fixflash-confirmorder-button-container {
+    width: auto;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .fixflash-confirmorder-disabled-tooltip {
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Textarea adjustments for tablet */
+  .fixflash-confirmorder-textarea {
+    min-height: 100px;
+    font-size: 1rem;
+  }
+
+  /* Temporary phone section adjustments for tablet */
+  .fixflash-confirmorder-temporary-phone-wrapper {
+    padding: 1rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-title {
+    font-size: 1rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-desc {
+    font-size: 0.9rem;
+  }
+
+  .fixflash-confirmorder-coming-soon-badge {
+    font-size: 0.75rem;
+  }
+}
+
+/* PC Devices (1024px and up) */
+@media (min-width: 1024px) {
+  .fixflash-confirmorder-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .fixflash-confirmorder-header {
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 1200px;
+  }
+
+  .fixflash-confirmorder-header-title {
+    font-size: 2rem;
+  }
+
+  .fixflash-confirmorder-header-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .fixflash-confirmorder-details-container {
+    max-width: 1000px;
+    padding: 0 2rem 2rem 2rem;
+  }
+
+  .fixflash-confirmorder-content-wrapper {
+    max-width: 1000px;
+  }
+
+  .fixflash-confirmorder-section {
+    padding: 2rem;
+  }
+
+  .fixflash-confirmorder-fixed-bottom {
+    max-width: 1000px;
+    padding: 1.25rem 2rem;
+  }
+
+  .fixflash-confirmorder-fixed-content {
+    max-width: 1000px;
+  }
+
+  .fixflash-confirmorder-fixed-total {
+    padding: 1rem 2rem;
+  }
+
+  .fixflash-confirmorder-fixed-total-label {
+    font-size: 1.1rem;
+  }
+
+  .fixflash-confirmorder-fixed-total-value {
+    font-size: 1.4rem;
+  }
+
+  .fixflash-confirmorder-fixed-confirm-btn {
+    max-width: 220px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .fixflash-confirmorder-inline-summary {
+    max-width: 1000px;
+    margin: 1rem auto 0 auto;
+  }
+
+  .fixflash-confirmorder-inline-total {
+    padding: 1rem 2rem;
+  }
+
+  .fixflash-confirmorder-inline-confirm-btn {
+    max-width: 220px;
+    padding: 1rem 2rem;
+  }
+
+  .fixflash-confirmorder-button-container {
+    max-width: 220px;
+  }
+
+  /* Textarea adjustments for desktop */
+  .fixflash-confirmorder-textarea {
+    min-height: 120px;
+    font-size: 1.05rem;
+  }
+
+  /* Temporary phone section adjustments for desktop */
+  .fixflash-confirmorder-temporary-phone-wrapper {
+    padding: 1.25rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-title {
+    font-size: 1.05rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-desc {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .fixflash-confirmorder-header {
+    margin: 0rem 0 1.5rem 0;
+    padding: 1.08rem 1rem;
+  }
+
+  .fixflash-confirmorder-header-title {
+    font-size: 1.3rem;
+  }
+
+  .fixflash-confirmorder-header-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .fixflash-confirmorder-details-container {
+    padding: 0 0.5rem 2rem 0.5rem;
+  }
+
+  .fixflash-confirmorder-section {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .fixflash-confirmorder-payment-option {
+    padding: 0.75rem;
+  }
+
+  .fixflash-confirmorder-payment-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .fixflash-confirmorder-payment-selected {
+    align-self: flex-end;
+  }
+
+  .fixflash-confirmorder-fixed-bottom {
+    padding: 0.75rem;
+  }
+
+  .fixflash-confirmorder-fixed-content {
+    gap: 0.75rem;
+  }
+
+  .fixflash-confirmorder-fixed-total {
+    padding: 0.75rem;
+  }
+
+  .fixflash-confirmorder-fixed-total-label {
+    font-size: 0.95rem;
+  }
+
+  .fixflash-confirmorder-fixed-total-value {
+    font-size: 1.1rem;
+  }
+
+  .fixflash-confirmorder-fixed-confirm-btn {
+    padding: 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  .fixflash-confirmorder-success-title {
+    font-size: 1.5rem;
+  }
+
+  .fixflash-confirmorder-address-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .fixflash-confirmorder-change-address-btn {
+    align-self: stretch;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .fixflash-confirmorder-no-address-content {
+    padding: 1.5rem;
+  }
+
+  .fixflash-confirmorder-no-address-text h3 {
+    font-size: 1.1rem;
+  }
+
+  .fixflash-confirmorder-no-address-text p {
+    font-size: 0.9rem;
+  }
+
+  .fixflash-confirmorder-overlay-backdrop {
+    padding: 0.5rem;
+  }
+
+  .fixflash-confirmorder-inline-summary {
+    padding: 1rem;
+  }
+
+  .fixflash-confirmorder-inline-total {
+    padding: 0.75rem;
+  }
+
+  .fixflash-confirmorder-inline-confirm-btn {
+    padding: 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  .fixflash-confirmorder-disabled-tooltip {
+    top: -50px;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .fixflash-confirmorder-custom-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    margin-left: 0.3rem;
+  }
+
+  /* Textarea adjustments for mobile */
+  .fixflash-confirmorder-textarea {
+    min-height: 70px;
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .fixflash-confirmorder-textarea-label {
+    font-size: 0.9rem;
+  }
+
+  /* Temporary phone section adjustments for mobile */
+  .fixflash-confirmorder-temporary-phone-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-wrapper {
+    padding: 0.6rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-title {
+    font-size: 0.9rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-desc {
+    font-size: 0.8rem;
+  }
+
+  .fixflash-confirmorder-coming-soon-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-checkbox {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+  .fixflash-confirmorder-header {
+    padding: 0.8rem;
+  }
+
+  .fixflash-confirmorder-header-title {
+    font-size: 1.2rem;
+  }
+
+  .fixflash-confirmorder-section {
+    padding: 0.8rem;
+  }
+
+  .fixflash-confirmorder-address-slot {
+    padding: 0.8rem;
+  }
+
+  .fixflash-confirmorder-fixed-bottom {
+    padding: 0.5rem;
+  }
+
+  .fixflash-confirmorder-fixed-total {
+    padding: 0.6rem;
+  }
+
+  .fixflash-confirmorder-fixed-confirm-btn {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .fixflash-confirmorder-inline-summary {
+    padding: 0.8rem;
+  }
+
+  .fixflash-confirmorder-inline-total {
+    padding: 0.6rem;
+  }
+
+  .fixflash-confirmorder-inline-confirm-btn {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .fixflash-confirmorder-custom-badge {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+
+  /* Textarea adjustments for extra small devices */
+  .fixflash-confirmorder-textarea {
+    min-height: 60px;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+  }
+
+  /* Temporary phone section adjustments for extra small devices */
+  .fixflash-confirmorder-temporary-phone-section {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-wrapper {
+    padding: 0.5rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-title {
+    font-size: 0.85rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-desc {
+    font-size: 0.75rem;
+  }
+
+  .fixflash-confirmorder-coming-soon-badge {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+
+  .fixflash-confirmorder-temporary-phone-checkbox {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* Focus styles for accessibility */
+.fixflash-confirmorder-back-btn:focus,
+.fixflash-confirmorder-change-address-btn:focus,
+.fixflash-confirmorder-add-address-btn:focus,
+.fixflash-confirmorder-fixed-confirm-btn:focus,
+.fixflash-confirmorder-inline-confirm-btn:focus,
+.fixflash-confirmorder-success-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.fixflash-confirmorder-checkbox:focus,
+.fixflash-confirmorder-textarea:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 1px;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .fixflash-confirmorder-fixed-confirm-btn:active:not(:disabled),
+  .fixflash-confirmorder-inline-confirm-btn:active:not(:disabled),
+  .fixflash-confirmorder-success-btn:active {
+    transform: scale(0.98);
+  }
+
+  .fixflash-confirmorder-change-address-btn:active,
+  .fixflash-confirmorder-add-address-btn:active {
+    transform: scale(0.98);
+  }
+
+  .fixflash-confirmorder-temporary-phone-wrapper:active {
+    background: #f1f5f9;
+  }
+}
+
+/* Form validation styles */
+.fixflash-confirmorder-textarea:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.fixflash-confirmorder-textarea:valid:not(:focus):not(:placeholder-shown) {
+  border-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+/* Loading state for textareas */
+.fixflash-confirmorder-textarea:disabled {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Character counter for textareas (optional) */
+.fixflash-confirmorder-textarea-counter {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.fixflash-confirmorder-textarea-counter.warning {
+  color: #f59e0b;
+}
+
+.fixflash-confirmorder-textarea-counter.error {
+  color: #ef4444;
+}
+
+/* =============================================== */
+/* Skeleton Loading Styles */
+/* =============================================== */
+
+.skeleton-loader {
+  animation: skeleton-fade 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton-fade {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton Header */
+.skeleton-header {
+  margin: 1rem 0 1.5rem 0;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  box-shadow: 0 4px 20px rgba(203, 213, 225, 0.3);
+  border-radius: 0;
+}
+
+.skeleton-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.skeleton-back-button {
+  width: 70px;
+  height: 32px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.skeleton-header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.skeleton-header-text {
+  text-align: center;
+  flex: 1;
+}
+
+.skeleton-header-title {
+  height: 24px;
+  width: 200px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+  margin: 0 auto 4px;
+}
+
+.skeleton-header-subtitle {
+  height: 14px;
+  width: 250px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.skeleton-header-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+/* Skeleton Section */
+.skeleton-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-section-title {
+  height: 20px;
+  width: 40%;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Skeleton Address Section */
+.skeleton-address-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-address-card {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-address-type {
+  height: 16px;
+  width: 120px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.skeleton-change-btn {
+  height: 28px;
+  width: 100px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.skeleton-address-content {
+  padding: 0.5rem 0;
+}
+
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.skeleton-line:nth-child(2) {
+  width: 80%;
+}
+
+.skeleton-line:nth-child(3) {
+  width: 90%;
+}
+
+/* Skeleton Checkbox */
+.skeleton-checkbox {
+  background: #f0f7ff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+/* Skeleton Textarea */
+.skeleton-textarea {
+  height: 80px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+}
+
+/* Skeleton Details Grid */
+.skeleton-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-detail-item {
+  height: 20px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.skeleton-detail-item:nth-child(1) {
+  width: 70%;
+}
+
+.skeleton-detail-item:nth-child(2) {
+  width: 80%;
+}
+
+.skeleton-detail-item:nth-child(3) {
+  width: 60%;
+}
+
+/* Skeleton Services */
+.skeleton-services {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-service-item {
+  height: 44px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* Skeleton Payment */
+.skeleton-payment {
+  height: 56px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* Skeleton Inline Summary */
+.skeleton-inline-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-total {
+  height: 44px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.skeleton-button {
+  height: 44px;
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+/* Responsive Skeleton Styles */
+@media (max-width: 768px) {
+  .skeleton-header {
+    margin: 0rem 0 1.5rem 0;
+    padding: 1rem;
+  }
+  
+  .skeleton-back-button {
+    width: 60px;
+    height: 28px;
+  }
+  
+  .skeleton-header-title {
+    height: 20px;
+    width: 150px;
+  }
+  
+  .skeleton-header-subtitle {
+    height: 12px;
+    width: 200px;
+  }
+  
+  .skeleton-header-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .skeleton-section {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .skeleton-section-title {
+    height: 18px;
+    width: 50%;
+  }
+  
+  .skeleton-address-type {
+    height: 14px;
+    width: 100px;
+  }
+  
+  .skeleton-change-btn {
+    height: 24px;
+    width: 80px;
+  }
+  
+  .skeleton-textarea {
+    height: 70px;
+  }
+  
+  .skeleton-total {
+    height: 40px;
+  }
+  
+  .skeleton-button {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skeleton-header {
+    padding: 1.08rem 1rem;
+  }
+  
+  .skeleton-header-title {
+    height: 18px;
+    width: 120px;
+  }
+  
+  .skeleton-header-subtitle {
+    height: 10px;
+    width: 160px;
+  }
+  
+  .skeleton-section {
+    padding: 0.8rem;
+  }
+  
+  .skeleton-section-title {
+    height: 16px;
+    width: 60%;
+  }
+  
+  .skeleton-address-type {
+    height: 12px;
+    width: 80px;
+  }
+  
+  .skeleton-change-btn {
+    height: 22px;
+    width: 70px;
+  }
+  
+  .skeleton-textarea {
+    height: 60px;
+  }
+  
+  .skeleton-total {
+    height: 36px;
+  }
+  
+  .skeleton-button {
+    height: 36px;
+  }
+}
+
+@media (max-width: 360px) {
+  .skeleton-header {
+    padding: 0.8rem;
+  }
+  
+  .skeleton-header-title {
+    height: 16px;
+    width: 100px;
+  }
+  
+  .skeleton-header-subtitle {
+    height: 9px;
+    width: 130px;
+  }
+  
+  .skeleton-section {
+    padding: 0.6rem;
+  }
+  
+  .skeleton-section-title {
+    height: 14px;
+    width: 70%;
+  }
+  
+  .skeleton-address-type {
+    height: 11px;
+    width: 70px;
+  }
+  
+  .skeleton-change-btn {
+    height: 20px;
+    width: 60px;
+  }
+  
+  .skeleton-textarea {
+    height: 50px;
+  }
+  
+  .skeleton-total {
+    height: 32px;
+  }
+  
+  .skeleton-button {
+    height: 32px;
+  }
+}
+
+/* Reduced motion support for skeleton */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-loader {
+    animation: none;
+  }
+  
+  .skeleton-back-button,
+  .skeleton-header-title,
+  .skeleton-header-subtitle,
+  .skeleton-header-icon,
+  .skeleton-section-title,
+  .skeleton-address-type,
+  .skeleton-change-btn,
+  .skeleton-line,
+  .skeleton-textarea,
+  .skeleton-detail-item,
+  .skeleton-service-item,
+  .skeleton-payment,
+  .skeleton-total,
+  .skeleton-button {
+    animation: none;
+    background: #e5e7eb;
+  }
+}
+
+
+/* =============================================== */
+/* Delivery Fees Breakdown Styles */
+/* =============================================== */
+
+.fixflash-confirmorder-fees-breakdown {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.fixflash-confirmorder-fee-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.fixflash-confirmorder-fee-item:last-child {
+  border-bottom: none;
+}
+
+.fixflash-confirmorder-fee-label {
+  color: #495057;
+  font-size: 14px;
+}
+
+.fixflash-confirmorder-fee-value {
+  color: #212529;
+  font-weight: 500;
+}
+
+.fixflash-confirmorder-fee-divider {
+  height: 1px;
+  background: #dee2e6;
+  margin: 10px 0;
+}
+
+.fixflash-confirmorder-total-fee {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0 0;
+  margin-top: 8px;
+  border-top: 2px solid #dee2e6;
+}
+
+.fixflash-confirmorder-total-label {
+  color: #212529;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.fixflash-confirmorder-total-value {
+  color: #228be6;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Responsive styles for delivery fees section */
+@media (max-width: 768px) {
+  .fixflash-confirmorder-fees-breakdown {
+    padding: 12px;
+  }
+
+  .fixflash-confirmorder-fee-item {
+    padding: 6px 0;
+  }
+
+  .fixflash-confirmorder-fee-label {
+    font-size: 13px;
+  }
+
+  .fixflash-confirmorder-fee-value {
+    font-size: 13px;
+  }
+
+  .fixflash-confirmorder-total-label {
+    font-size: 15px;
+  }
+
+  .fixflash-confirmorder-total-value {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fixflash-confirmorder-fees-breakdown {
+    padding: 10px;
+  }
+
+  .fixflash-confirmorder-fee-label {
+    font-size: 12px;
+  }
+
+  .fixflash-confirmorder-fee-value {
+    font-size: 12px;
+  }
+
+  .fixflash-confirmorder-total-label {
+    font-size: 14px;
+  }
+
+  .fixflash-confirmorder-total-value {
+    font-size: 15px;
+  }
+}

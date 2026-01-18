@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Plus, Edit, Trash2, Star, Home, Building, Navigation } from 'lucide-react';
+import { MapPin, Plus, X } from 'lucide-react';
 import './Addresses.css';
+import LocationPicker from '../../components/LocationPicker/LocationPicker';
+import AddressesList from '../../components/AddressesList/AddressesList';
+import AddressForm from '../../components/AddressForm/AddressForm';
+import { addressService } from '../../services/address.js';
 
 // Translation data
 const addressesTranslations = {
@@ -8,61 +12,129 @@ const addressesTranslations = {
     title: "My Addresses",
     subtitle: "Manage your delivery and pickup locations",
     addAddress: "Add New Address",
-    home: "Home",
-    work: "Work",
-    other: "Other",
-    default: "Default",
-    setDefault: "Set as Default",
-    edit: "Edit address",
-    delete: "Delete address",
-    deleteConfirm: "Are you sure you want to delete this address?",
     emptyTitle: "No addresses saved yet",
     emptySubtitle: "Add your first address to get started with services",
-    addFirstAddress: "Add Your First Address"
+    addFirstAddress: "Add Your First Address",
+    editAddress: "Edit Address"
   },
   hi: {
     title: "मेरे पते",
     subtitle: "अपने डिलीवरी और पिकअप स्थानों को प्रबंधित करें",
     addAddress: "नया पता जोड़ें",
-    home: "घर",
-    work: "कार्य",
-    other: "अन्य",
-    default: "डिफ़ॉल्ट",
-    setDefault: "डिफ़ॉल्ट के रूप में सेट करें",
-    edit: "पता संपादित करें",
-    delete: "पता हटाएं",
-    deleteConfirm: "क्या आप वाकई इस पते को हटाना चाहते हैं?",
     emptyTitle: "अभी तक कोई पते सहेजे नहीं गए हैं",
-    emptySubtitle: "सेवाओं का उपयोग शुरू करने के लिए अपना पहला पता जोड़ें",
-    addFirstAddress: "अपना पहला पता जोड़ें"
+    emptySubtitle: "सर्विस का उपयोग शुरू करने के लिए अपना पहला पता जोड़ें",
+    addFirstAddress: "अपना पहला पता जोड़ें",
+    editAddress: "पता संपादित करें"
   },
   mr: {
     title: "माझे पत्ते",
     subtitle: "तुमची डिलिवरी आणि पिकअप लोकेशन्स व्यवस्थापित करा",
     addAddress: "नवीन पत्ता जोडा",
-    home: "घर",
-    work: "काम",
-    other: "इतर",
-    default: "डीफॉल्ट",
-    setDefault: "डीफॉल्ट म्हणून सेट करा",
-    edit: "पत्ता संपादित करा",
-    delete: "पत्ता हटवा",
-    deleteConfirm: "तुम्हाला खात्री आहे की तुम्ही हा पत्ता हटवू इच्छिता?",
     emptyTitle: "अद्याप कोणतेही पत्ते जतन केलेले नाहीत",
-    emptySubtitle: "सेवा सुरू करण्यासाठी तुमचा पहिला पत्ता जोडा",
-    addFirstAddress: "तुमचा पहिला पत्ता जोडा"
+    emptySubtitle: "सर्विस सुरू करण्यासाठी तुमचा पहिला पत्ता जोडा",
+    addFirstAddress: "तुमचा पहिला पत्ता जोडा",
+    editAddress: "पत्ता संपादित करा"
   }
+};
+
+// Skeleton Loader Component
+const SkeletonLoader = () => {
+  return (
+    <div className="did-addresses-skeleton-container">
+      {/* Header Skeleton */}
+      <div className="did-skeleton-header">
+        <div className="did-skeleton-header-content">
+          <div className="skeleton skeleton-icon"></div>
+          <div className="skeleton-text-group">
+            <div className="skeleton skeleton-main-title"></div>
+            <div className="skeleton skeleton-subtitle"></div>
+          </div>
+        </div>
+        <div className="skeleton skeleton-add-btn"></div>
+      </div>
+
+      {/* Address List Skeleton */}
+      <div className="did-skeleton-content">
+        <div className="did-skeleton-list">
+          {[1, 2, 3].map((item) => (
+            <div key={item} className="did-skeleton-address-card">
+              <div className="skeleton skeleton-card-icon"></div>
+              <div className="skeleton-card-content">
+                <div className="skeleton skeleton-card-title"></div>
+                <div className="skeleton skeleton-card-address-line"></div>
+                <div className="skeleton skeleton-card-address-line-short"></div>
+              </div>
+              <div className="skeleton-card-actions">
+                <div className="skeleton skeleton-action-btn"></div>
+                <div className="skeleton skeleton-action-btn"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Empty State Skeleton
+const EmptyStateSkeleton = () => {
+  return (
+    <div className="did-empty-state-skeleton">
+      <div className="skeleton skeleton-empty-icon"></div>
+      <div className="skeleton skeleton-empty-title"></div>
+      <div className="skeleton skeleton-empty-subtitle"></div>
+      <div className="skeleton skeleton-empty-btn"></div>
+    </div>
+  );
 };
 
 function Addresses() {
   const [currentLanguage, setCurrentLanguage] = useState('en');
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [showLocationPicker, setShowLocationPicker] = useState(false);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const MINIMUM_LOADING_TIME = 200 // 2 seconds minimum loading time
   
-  // Get language preference from localStorage
+  // Load addresses from backend
+  const loadAddresses = async () => {
+    try {
+      setLoading(true);
+      const response = await addressService.getAddresses();
+      if (response.success) {
+        setAddresses(response.data);
+        // Auto-select default address if available
+        const defaultAddress = response.data.find(addr => addr.isDefault);
+        if (defaultAddress) {
+          setSelectedAddress(defaultAddress);
+        } else if (response.data.length > 0) {
+          // Select first address if no default
+          setSelectedAddress(response.data[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading addresses:', error);
+    } finally {
+      // Wait for minimum loading time before hiding skeleton
+      setTimeout(() => {
+        setLoading(false);
+        setShowSkeleton(false);
+      }, MINIMUM_LOADING_TIME);
+    }
+  };
+
+  // Get language preference from localStorage and load addresses
   useEffect(() => {
     const savedLanguage = localStorage.getItem('preferredLanguage');
     if (savedLanguage && addressesTranslations[savedLanguage]) {
       setCurrentLanguage(savedLanguage);
     }
+    
+    // Load addresses
+    loadAddresses();
     
     // Listen for language changes
     const handleLanguageChange = () => {
@@ -76,78 +148,132 @@ function Addresses() {
     return () => window.removeEventListener('languageChanged', handleLanguageChange);
   }, []);
 
-  // Sample initial addresses data
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      phone: "+1 (555) 123-4567",
-      address: "123 Main Street, Apt 4B",
-      city: "San Francisco",
-      state: "CA",
-      pincode: "94103",
-      isDefault: true,
-      type: "home"
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      phone: "+1 (555) 987-6543",
-      address: "456 Oak Avenue, Suite 200",
-      city: "San Jose",
-      state: "CA",
-      pincode: "95123",
-      isDefault: false,
-      type: "work"
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      phone: "+1 (555) 246-8101",
-      address: "789 Beach Boulevard",
-      city: "Santa Cruz",
-      state: "CA",
-      pincode: "95060",
-      isDefault: false,
-      type: "other"
-    }
-  ]);
-
   // Function to handle address deletion
-  const handleDelete = (id) => {
-    if (window.confirm(addressesTranslations[currentLanguage].deleteConfirm)) {
-      setAddresses(addresses.filter(address => address.id !== id));
+  const handleDeleteAddress = async (id) => {
+    if (window.confirm("Are you sure you want to delete this address?")) {
+      try {
+        const response = await addressService.deleteAddress(id);
+        if (response.success) {
+          await loadAddresses(); // Reload addresses
+          if (selectedAddress?._id === id) {
+            // Select another address if available
+            const remainingAddresses = addresses.filter(addr => addr._id !== id);
+            if (remainingAddresses.length > 0) {
+              setSelectedAddress(remainingAddresses[0]);
+            } else {
+              setSelectedAddress(null);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error deleting address:', error);
+        if (error.message.includes('Cannot delete the only address')) {
+          alert('Cannot delete the only address. Please add another address first.');
+        } else {
+          alert('Failed to delete address. Please try again.');
+        }
+      }
     }
   };
 
-  // Function to set default address
-  const setDefaultAddress = (id) => {
-    setAddresses(addresses.map(address => ({
-      ...address,
-      isDefault: address.id === id
-    })));
+  // Function to handle address edit
+  const handleEditAddress = (address) => {
+    console.log("Editing address:", address);
+    setEditingAddress(address);
+    setShowAddressForm(true);
+    setShowLocationPicker(false);
   };
 
-  // Function to get address type icon
-  const getAddressTypeIcon = (type) => {
-    switch(type) {
-      case "home": return <Home size={16} />;
-      case "work": return <Building size={16} />;
-      default: return <Navigation size={16} />;
-    }
+  // Function to handle address selection
+  const handleSelectAddress = (address) => {
+    setSelectedAddress(address);
   };
 
-  // Function to get translated address type
-  const getTranslatedAddressType = (type) => {
-    switch(type) {
-      case "home": return addressesTranslations[currentLanguage].home;
-      case "work": return addressesTranslations[currentLanguage].work;
-      default: return addressesTranslations[currentLanguage].other;
-    }
+  // Function to handle location selection from LocationPicker
+  const handleSelectLocation = (location) => {
+    console.log("Location selected:", location);
+    setSelectedAddress(location);
   };
+
+  // Function to handle adding a new address from LocationPicker
+  const handleAddAddress = (newAddress) => {
+    // Reload addresses when new address is added
+    loadAddresses();
+    setShowLocationPicker(false);
+  };
+
+  // Function to handle address form submission
+  const handleAddressSaved = () => {
+    loadAddresses(); // Reload addresses
+    setShowAddressForm(false);
+    setEditingAddress(null);
+  };
+
+  // Format address for display in AddressesList
+  const formatAddressForList = (address) => {
+    const parts = [address.address_line];
+    if (address.landmark) parts.push(address.landmark);
+    parts.push(address.city, address.state, address.pincode);
+    
+    return {
+      _id: address._id,
+      id: address._id, // Keep both for compatibility
+      type: address.type,
+      name: address.name,
+      phone: address.phone,
+      address: parts.filter(part => part).join(', '),
+      isDefault: address.isDefault,
+      // Include all original address data for editing
+      ...address
+    };
+  };
+
+  if (showSkeleton) {
+    return <SkeletonLoader />;
+  }
 
   return (
     <div className="did-addresses-container">
+      {/* Location Picker Overlay */}
+      {showLocationPicker && (
+        <div className="location-picker-overlay">
+          <div className="location-picker-content">
+            <div className="location-picker-header">
+              <p className='overlay-header'>Add Address</p>
+              <button 
+                className="location-picker-close-btn"
+                onClick={() => setShowLocationPicker(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
+            {/* FIX: Pass currentLanguage prop to LocationPicker */}
+            <LocationPicker
+              currentLanguage={currentLanguage}
+              onClose={() => setShowLocationPicker(false)}
+              onSelectLocation={handleSelectLocation}
+              onAddAddress={handleAddAddress}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Address Form Overlay for Editing */}
+      {showAddressForm && (
+        <div className="location-picker-overlay">
+          <div className="location-picker-content">
+            <AddressForm 
+              onClose={() => {
+                setShowAddressForm(false);
+                setEditingAddress(null);
+              }}
+              onAddressAdded={handleAddressSaved}
+              editAddress={editingAddress}
+            />
+          </div>
+        </div>
+      )}
+
       <div className="did-addresses-header">
         <div className="did-header-content">
           <div className="did-header-title">
@@ -156,67 +282,34 @@ function Addresses() {
           </div>
           <p className="did-header-subtitle multilingual-text">{addressesTranslations[currentLanguage].subtitle}</p>
         </div>
-        <button className="did-add-address-btn">
+        <button 
+          className="did-add-address-btn"
+          onClick={() => setShowLocationPicker(true)}
+        >
           <Plus size={20} />
           <span className="multilingual-text">{addressesTranslations[currentLanguage].addAddress}</span>
         </button>
       </div>
 
       <div className="did-addresses-content">
-        {addresses.length > 0 ? (
-          <div className="did-addresses-grid">
-            {addresses.map(address => (
-              <div key={address.id} className={`did-address-card ${address.isDefault ? 'did-default-address' : ''}`}>
-                <div className="did-address-card-header">
-                  <div className="did-address-type">
-                    {getAddressTypeIcon(address.type)}
-                    <span className="multilingual-text">{getTranslatedAddressType(address.type)}</span>
-                  </div>
-                  {address.isDefault ? (
-                    <div className="did-default-badge">
-                      <Star size={14} fill="currentColor" />
-                      <span className="multilingual-text">{addressesTranslations[currentLanguage].default}</span>
-                    </div>
-                  ) : null}
-                </div>
-                
-                <div className="did-address-details">
-                  <h3 className="did-address-name">{address.name}</h3>
-                  <p className="did-address-phone">{address.phone}</p>
-                  <p className="did-address-street">{address.address}</p>
-                  <p className="did-address-city">{address.city}, {address.state} {address.pincode}</p>
-                </div>
-                
-                <div className="did-address-actions">
-                  <div className="did-action-buttons">
-                    <button 
-                      className="did-action-btn did-edit-address-btn"
-                      aria-label={addressesTranslations[currentLanguage].edit}
-                    >
-                      <Edit size={18} />
-                    </button>
-                    <button 
-                      className="did-action-btn did-delete-address-btn"
-                      onClick={() => handleDelete(address.id)}
-                      aria-label={addressesTranslations[currentLanguage].delete}
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-                  
-                  {!address.isDefault && (
-                    <button 
-                      className="did-set-default-btn"
-                      onClick={() => setDefaultAddress(address.id)}
-                    >
-                      <Star size={16} />
-                      <span className="multilingual-text">{addressesTranslations[currentLanguage].setDefault}</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        {loading ? (
+          <EmptyStateSkeleton />
+        ) : addresses.length > 0 ? (
+          <AddressesList
+            addresses={addresses.map(formatAddressForList)}
+            selectedAddress={selectedAddress ? formatAddressForList(selectedAddress) : null}
+            onSelectAddress={(addr) => {
+              const originalAddr = addresses.find(a => a._id === addr._id);
+              handleSelectAddress(originalAddr);
+            }}
+            onEditAddress={(addr) => {
+              // Pass the full address object to edit function
+              const originalAddr = addresses.find(a => a._id === addr._id);
+              handleEditAddress(originalAddr);
+            }}
+            onDeleteAddress={handleDeleteAddress}
+            currentLanguage={currentLanguage}
+          />
         ) : (
           <div className="did-empty-state">
             <div className="did-empty-icon">
@@ -224,7 +317,10 @@ function Addresses() {
             </div>
             <h2 className="multilingual-text">{addressesTranslations[currentLanguage].emptyTitle}</h2>
             <p className="multilingual-text">{addressesTranslations[currentLanguage].emptySubtitle}</p>
-            <button className="did-add-first-address-btn">
+            <button 
+              className="did-add-first-address-btn"
+              onClick={() => setShowLocationPicker(true)}
+            >
               <Plus size={20} />
               <span className="multilingual-text">{addressesTranslations[currentLanguage].addFirstAddress}</span>
             </button>

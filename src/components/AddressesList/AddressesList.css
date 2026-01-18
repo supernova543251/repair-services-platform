@@ -1,0 +1,383 @@
+/* Addresses List Styles */
+.al-container {
+  flex: 1;
+}
+
+.al-container h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: #1a1a1a;
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.al-addresses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.al-address-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  background: white;
+  border: 2px solid #f1f3f4;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 8px;
+}
+
+.al-address-card:hover {
+  border-color: #e8eaed;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.al-address-card.al-selected {
+  border-color: #0066ff;
+  background: #f0f7ff;
+  padding: 8px 10px;
+}
+
+.al-address-card.al-default {
+  border-color: #27ae60;
+  background: rgba(39, 174, 96, 0.05);
+  padding: 8px 10px;
+}
+
+.al-pin-icon {
+  color: #0066ff;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin-top: 4px;
+}
+
+.al-address-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.al-address-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.al-address-details h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.al-default-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: #27ae60;
+  color: white;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Address Lines */
+.al-address-line {
+  font-size: 12px;
+  color: #333;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.al-location-details {
+  font-size: 11px;
+  color: #666;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+/* Contact Information */
+.al-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+}
+
+.al-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #666;
+}
+
+.al-contact-item svg {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  color: #888;
+}
+
+.al-contact-label {
+  font-weight: 500;
+  color: #555;
+  min-width: 35px;
+}
+
+.al-contact-value {
+  color: #333;
+  font-weight: 400;
+}
+
+.al-address-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.al-icon-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.al-icon-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.al-icon-btn:hover {
+  background: #f8f9fa;
+  color: #1a1a1a;
+}
+
+.al-icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading-addresses,
+.no-addresses {
+  text-align: center;
+  padding: 15px;
+  color: #666;
+  font-style: italic;
+}
+
+/* iPhone SE and other very small devices (≤320px) */
+@media (max-width: 320px) {
+  .al-container h2 {
+    font-size: 15px;
+    margin: 0 0 8px 0;
+  }
+  
+  .al-addresses-list {
+    gap: 6px;
+  }
+  
+  .al-address-card {
+    padding: 8px;
+    gap: 6px;
+    border-radius: 6px;
+  }
+  
+  .al-address-card.al-selected,
+  .al-address-card.al-default {
+    padding: 6px 8px;
+  }
+  
+  .al-pin-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+  }
+  
+  .al-address-header {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  
+  .al-address-details h4 {
+    font-size: 13px;
+  }
+  
+  .al-default-badge {
+    padding: 1px 4px;
+    font-size: 10px;
+  }
+  
+  .al-address-line {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  
+  .al-location-details {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  
+  .al-contact-item {
+    font-size: 10px;
+    gap: 4px;
+  }
+  
+  .al-contact-label {
+    min-width: 30px;
+  }
+  
+  .al-address-actions {
+    gap: 3px;
+    margin-top: 2px;
+  }
+  
+  .al-icon-btn {
+    padding: 4px;
+  }
+  
+  .al-icon-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Medium devices (321px to 375px) */
+@media (min-width: 321px) and (max-width: 375px) {
+  .al-container h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .al-addresses-list {
+    gap: 7px;
+  }
+  
+  .al-address-card {
+    padding: 9px;
+    gap: 7px;
+  }
+  
+  .al-address-card.al-selected,
+  .al-address-card.al-default {
+    padding: 7px 9px;
+  }
+  
+  .al-address-details h4 {
+    font-size: 13.5px;
+  }
+  
+  .al-address-line {
+    font-size: 11.5px;
+  }
+}
+
+/* Large phones (376px to 480px) */
+@media (min-width: 376px) and (max-width: 480px) {
+  .al-container h2 {
+    margin: 0 0 11px 0;
+  }
+  
+  .al-addresses-list {
+    gap: 8px;
+  }
+  
+  .al-address-card {
+    padding: 10px;
+    gap: 8px;
+  }
+  
+  .al-address-card.al-selected,
+  .al-address-card.al-default {
+    padding: 8px 10px;
+  }
+}
+
+/* Tablets and larger screens (481px and above) */
+@media (min-width: 481px) {
+  .al-container h2 {
+    margin: 0 0 14px 0;
+    font-size: 17px;
+  }
+  
+  .al-addresses-list {
+    gap: 10px;
+  }
+  
+  .al-address-card {
+    padding: 14px;
+    gap: 10px;
+    border-radius: 10px;
+  }
+  
+  .al-address-card.al-selected,
+  .al-address-card.al-default {
+    padding: 12px 14px;
+  }
+  
+  .al-pin-icon {
+    width: 35px;
+    height: 35px;
+    margin-top: 4px;
+  }
+  
+  .al-address-details h4 {
+    font-size: 15px;
+  }
+  
+  .al-default-badge {
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+  
+  .al-address-line {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  
+  .al-location-details {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .al-contact-item {
+    font-size: 12px;
+    gap: 8px;
+  }
+  
+  .al-contact-label {
+    min-width: 40px;
+  }
+  
+  .al-contact-item svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .al-address-actions {
+    gap: 6px;
+    margin-top: 4px;
+  }
+  
+  .al-icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}

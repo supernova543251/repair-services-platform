@@ -53,38 +53,31 @@ const translations = {
 
 // Function to detect system language
 const detectSystemLanguage = () => {
-  // Get browser language
   const browserLang = navigator.language || navigator.userLanguage;
   
-  // Check for Hindi variants
   if (browserLang.startsWith('hi') || browserLang.startsWith('hi-IN')) {
     return 'hi';
   }
   
-  // Check for Marathi variants
   if (browserLang.startsWith('mr') || browserLang.startsWith('mr-IN')) {
     return 'mr';
   }
   
-  // Default to English
   return 'en';
 };
 
-function ProfileAndSettings({ onClose }) {
+function ProfileAndSettings({ onClose, onLogout }) {
   const navigate = useNavigate();
   const isMobile = window.innerWidth <= 768;
-  const { userData, logout } = useLogin();
+  const { userData } = useLogin();
   
-  // Get the selected language from localStorage or detect from system or default to English
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
     const savedLanguage = localStorage.getItem('preferredLanguage');
     
-    // If user has previously selected a language, use that
     if (savedLanguage && translations[savedLanguage]) {
       return savedLanguage;
     }
     
-    // Otherwise detect system language
     const systemLanguage = detectSystemLanguage();
     localStorage.setItem('preferredLanguage', systemLanguage);
     return systemLanguage;
@@ -92,39 +85,42 @@ function ProfileAndSettings({ onClose }) {
   
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
-  // Set document language attribute for accessibility
   useEffect(() => {
     document.documentElement.lang = selectedLanguage;
   }, [selectedLanguage]);
 
+  // Simple logout function that calls parent's logout
   const handleLogout = () => {
-    logout();
-    onClose();
+    console.log('Logout clicked in ProfileAndSettings'); // Debug log
+    if (onLogout) {
+      onLogout();
+    } else {
+      // Fallback if no onLogout prop provided
+      onClose();
+    }
   };
 
   const handleMenuItemClick = (itemId) => {
-    onClose(); // Close the overlay first
+    onClose();
     
-    // Add a small delay to allow the overlay to close before navigation
     setTimeout(() => {
       switch(itemId) {
-        case 2: // Your Orders
+        case 2:
           navigate("/your-orders");
           break;
-        case 3: // Account & Privacy
+        case 3:
           navigate("/account-privacy");
           break;
-        case 4: // Addresses
+        case 4:
           navigate("/addresses");
           break;
-        case 5: // Help & Support
+        case 5:
           navigate("/help-support");
           break;
-        case 6: // About Us
+        case 6:
           navigate("/about-us");
           break;
         default:
-          // For language, do nothing
           break;
       }
     }, 100);
@@ -139,10 +135,15 @@ function ProfileAndSettings({ onClose }) {
   const handleLanguageChange = (languageCode) => {
     setSelectedLanguage(languageCode);
     setIsLanguageDropdownOpen(false);
-    // Save to localStorage
     localStorage.setItem('preferredLanguage', languageCode);
-    // Dispatch custom event to notify other components
+    
+    // Set session flag that we're doing a language change refresh
+    sessionStorage.setItem('languageChange', 'true');
+    
     window.dispatchEvent(new CustomEvent('languageChanged'));
+    
+    // Refresh the website to apply language changes to all components
+    window.location.reload();
   };
 
   const menuItems = [
@@ -189,7 +190,6 @@ function ProfileAndSettings({ onClose }) {
   return (
     <div className="profile-overlay">
       <div className={`profile-container ${isMobile ? "mobile" : "sidebar"}`}>
-        {/* Close button */}
         <button className="close-btn" onClick={onClose} aria-label="Close settings">
           <X size={20} />
         </button>
@@ -224,16 +224,6 @@ function ProfileAndSettings({ onClose }) {
             <span>{translations[selectedLanguage].logout}</span>
           </button>
         </div>
-
-        {/* Test info - only visible during development */}
-        {process.env.NODE_ENV === "development" && (
-          <div className="test-info">
-            <p>
-              <strong>Test Mode:</strong> Use the settings icon in navbar to
-              toggle login state
-            </p>
-          </div>
-        )}
       </div>
       <div className="profile-backdrop" onClick={onClose}></div>
     </div>

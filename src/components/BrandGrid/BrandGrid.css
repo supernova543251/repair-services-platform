@@ -177,7 +177,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #876db7, transparent);
+  background: linear-gradient(90deg, transparent, #d6c3fa, transparent);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -350,6 +350,6 @@
 
 /* Focus styles for accessibility */
 .brand-item:focus {
-  outline: 2px solid #d4af37;
+  outline: 2px solid #9d60ec56;
   outline-offset: 2px;
 }

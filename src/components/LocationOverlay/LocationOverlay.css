@@ -1,55 +1,85 @@
 /* Import Google Fonts for multilingual support */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Devanagari:wght@100..900&display=swap');
 
-/* Location Overlay - Modern Design with unique class names */
-.lo-overlay {
+/* Bottom Sheet Overlay - MOBILE (default) */
+.lo-overlay-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: white;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  pointer-events: none;
 }
 
-.lo-content {
-  flex: 1;
-  padding: 16px;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.lo-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
 }
 
-/* Multilingual text support */
-.multilingual-text {
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  font-display: swap;
+.lo-backdrop.active {
+  opacity: 1;
+}
+
+.lo-bottom-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  touch-action: pan-y;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lo-bottom-sheet.active {
+  transform: translateY(0);
+}
+
+.lo-drag-handle {
+  width: 40px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin: 12px auto;
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.lo-drag-handle:active {
+  cursor: grabbing;
 }
 
 /* Header */
 .lo-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding-bottom: 12px;
+  padding: 0 16px 16px;
   border-bottom: 1px solid #f1f3f4;
-  position: sticky;
-  top: 0;
+  position: relative;
   background: white;
-  z-index: 10;
+  flex-shrink: 0;
 }
 
-.lo-back-button {
+.lo-close-button {
   background: none;
   border: none;
-  padding: 8px;
+  padding: 4px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -57,14 +87,19 @@
   justify-content: center;
   transition: background-color 0.2s;
   flex-shrink: 0;
+  margin-top: 4px;
 }
 
-.lo-back-button:hover {
+.lo-close-button:hover {
   background-color: #f8f9fa;
 }
 
+.lo-header-text {
+  flex: 1;
+}
+
 .lo-header-text h1 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   margin: 0;
   color: #1a1a1a;
@@ -80,247 +115,29 @@
   font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
-/* Search Bar */
-.lo-search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 10px 14px;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.lo-search-container:focus-within {
-  background: white;
-  border-color: #0066ff;
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-}
-
-.lo-search-icon {
-  color: #666;
-  margin-right: 10px;
-  flex-shrink: 0;
-}
-
-.lo-search-input {
+/* Content */
+.lo-content {
   flex: 1;
-  border: none;
-  background: none;
-  font-size: 16px;
-  outline: none;
-  color: #1a1a1a;
-  /* Improve mobile typing experience */
-  /* -webkit-appearance: none; */
-  border-radius: 0;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-.lo-search-input::placeholder {
-  color: #999;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-.lo-clear-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  border-radius: 50%;
-  cursor: pointer;
-  color: #999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-
-.lo-clear-btn:hover {
-  background: #e8eaed;
-  color: #666;
-}
-
-/* Location Options - Side by Side */
-.lo-location-options {
-  display: flex;
-  justify-content: center;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.lo-location-option{
-  width: 100%;
-}
-
-/* For slightly larger phones in landscape */
-@media (min-width: 480px) and (max-width: 768px) {
-  .lo-location-options {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.lo-location-option {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  padding-bottom: 80px; /* Space for floating button */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px 12px;
-  background: white;
-  border: 2px solid #f1f3f4;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  min-height: 100px;
-  justify-content: center;
+  gap: 16px;
 }
 
-.lo-location-option:hover {
-  border-color: #0066ff;
-  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
-  transform: translateY(-1px);
+/* Floating Confirm Button */
+.lo-floating-button-container {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+  pointer-events: none;
 }
 
-.lo-option-icon {
-  background: #0066ff;
-  color: white;
-  padding: 10px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  width: 40px;
-  height: 40px;
-}
-
-.lo-option-icon.manual {
-  background: #8e44ad;
-}
-
-.lo-option-text h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-  color: #1a1a1a;
-  line-height: 1.3;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-.lo-option-text p {
-  font-size: 13px;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-/* Saved Addresses */
-.lo-saved-section {
-  flex: 1;
-}
-
-.lo-saved-section h2 {
-  font-size: 17px;
-  font-weight: 600;
-  margin: 0 0 14px 0;
-  color: #1a1a1a;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-.lo-addresses-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.lo-address-card {
-  display: flex;
-  align-items: center;
-  padding: 14px;
-  background: white;
-  border: 2px solid #f1f3f4;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  gap: 10px;
-}
-
-.lo-address-card:hover {
-  border-color: #e8eaed;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.lo-address-card.lo-selected {
-  border-color: #0066ff;
-  background: #f0f7ff;
-}
-
-.lo-pin-icon {
-  color: #0066ff;
-  flex-shrink: 0;
-}
-
-.lo-address-details {
-  flex: 1;
-  min-width: 0; /* Allows text truncation */
-}
-
-.lo-address-details h4 {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0;
-  color: #1a1a1a;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-}
-
-.lo-address-details p {
-  font-size: 13px;
-  color: #666;
-  margin: 4px 0 0 0;
-  line-height: 1.4;
-  /* Allow address text to wrap */
-  word-break: break-word;
-}
-
-.lo-address-actions {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.lo-icon-btn {
-  background: none;
-  border: none;
-  padding: 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.lo-icon-btn:hover {
-  background: #f8f9fa;
-  color: #1a1a1a;
-}
-
-/* Confirm Button */
-.lo-confirm-section {
-  padding: 16px 0;
-  background: white;
-  border-top: 1px solid #f1f3f4;
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-}
-
-.lo-confirm-btn {
+.lo-floating-button {
   width: 100%;
   padding: 16px;
   background: #0066ff;
@@ -330,88 +147,347 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  /* Prevent zoom on iOS when tapping buttons */
-  touch-action: manipulation;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
   font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  touch-action: manipulation;
 }
 
-.lo-confirm-btn:hover:not(:disabled) {
+.lo-floating-button:hover:not(:disabled) {
   background: #0052cc;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 102, 255, 0.4);
 }
 
-.lo-confirm-btn:disabled {
+.lo-floating-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+}
+
+.lo-floating-button:disabled {
   background: #ccc;
   cursor: not-allowed;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add New Address Button */
+.lo-add-new-section {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.lo-add-new-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 16px;
+  background: #f8f9fa;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.lo-add-new-btn:hover {
+  border-color: #0066ff;
+  color: #0066ff;
+  background: #f0f7ff;
+}
+
+/* Multilingual text support */
+.multilingual-text {
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-display: swap;
 }
 
 /* iPhone SE and other very small devices */
 @media (max-width: 320px) {
+  .lo-bottom-sheet {
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+  }
+  
   .lo-content {
     padding: 12px;
-    gap: 16px;
+    padding-bottom: 72px;
+    gap: 12px;
   }
   
   .lo-header {
-    gap: 8px;
+    padding: 0 12px 12px;
   }
   
   .lo-header-text h1 {
-    font-size: 18px;
+    font-size: 16px;
   }
   
-  .lo-search-container {
-    padding: 8px 12px;
+  .lo-header-text p {
+    font-size: 12px;
   }
   
-  .lo-search-input {
+  .lo-floating-button-container {
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  
+  .lo-floating-button {
+    padding: 14px;
     font-size: 15px;
   }
   
-  .lo-location-option {
-    padding: 12px 8px;
-    min-height: 90px;
-  }
-  
-  .lo-option-icon {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 8px;
-  }
-  
-  .lo-option-text h3 {
-    font-size: 14px;
-  }
-  
-  .lo-address-card {
-    padding: 12px;
-  }
-  
-  .lo-address-details h4 {
+  .lo-add-new-btn {
+    padding: 12px 14px;
     font-size: 14px;
   }
 }
 
 /* Larger phones in landscape */
 @media (max-height: 500px) and (orientation: landscape) {
+  .lo-bottom-sheet {
+    max-height: 95vh;
+  }
+  
   .lo-content {
-    gap: 16px;
+    gap: 12px;
   }
   
-  .lo-header {
-    position: static;
-  }
-  
-  .lo-confirm-section {
-    position: static;
+  .lo-floating-button-container {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   }
 }
 
-/* Prevent body scrolling when overlay is open */
-body.lo-overlay-open {
+/* =============================================== */
+/* DESKTOP & BIG DEVICES DESIGN (768px and above) */
+/* =============================================== */
+
+@media (min-width: 768px) {
+  .lo-overlay-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+  }
+  
+  .lo-backdrop {
+    display: none; /* Not needed for desktop modal */
+  }
+  
+  .lo-bottom-sheet {
+    position: relative;
+    width: 600px;
+    max-height: 80vh;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(0) scale(0.9);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .lo-bottom-sheet.active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  
+  .lo-drag-handle {
+    display: none; /* Hide drag handle on desktop */
+  }
+  
+  /* Desktop Header */
+  .lo-header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid #f1f3f4;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+  
+  .lo-header-text p {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+    color: #777;
+  }
+  
+  .lo-close-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    margin-top: 0;
+    background: #f8f9fa;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .lo-close-button:hover {
+    background: #e8eaed;
+  }
+  
+  /* Desktop Content */
+  .lo-content {
+    padding: 24px;
+    padding-bottom: 100px; /* More space for button */
+    gap: 20px;
+    max-height: 60vh;
+  }
+  
+  /* Desktop Add New Address Button */
+  .lo-add-new-section {
+    padding-bottom: 20px;
+  }
+  
+  .lo-add-new-btn {
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+  
+  /* Desktop Floating Button */
+  .lo-floating-button-container {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+  
+  .lo-floating-button {
+    padding: 18px;
+    font-size: 17px;
+    border-radius: 14px;
+  }
+}
+
+/* =============================================== */
+/* LARGE DESKTOP (1024px and above) */
+/* =============================================== */
+
+@media (min-width: 1024px) {
+  .lo-bottom-sheet {
+    width: 700px;
+    max-height: 85vh;
+  }
+  
+  .lo-content {
+    padding: 28px;
+    padding-bottom: 110px;
+    gap: 24px;
+    max-height: 65vh;
+  }
+  
+  .lo-header {
+    padding: 28px 28px 24px;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 24px;
+  }
+  
+  .lo-header-text p {
+    font-size: 15px;
+  }
+  
+  .lo-add-new-btn {
+    padding: 18px 24px;
+    font-size: 17px;
+  }
+  
+  .lo-floating-button-container {
+    left: 28px;
+    right: 28px;
+    bottom: 28px;
+  }
+  
+  .lo-floating-button {
+    padding: 20px;
+    font-size: 18px;
+  }
+}
+
+/* =============================================== */
+/* EXTRA LARGE DESKTOP (1440px and above) */
+/* =============================================== */
+
+@media (min-width: 1440px) {
+  .lo-bottom-sheet {
+    width: 800px;
+  }
+  
+  .lo-content {
+    padding: 32px;
+    padding-bottom: 120px;
+  }
+  
+  .lo-header {
+    padding: 32px 32px 28px;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 26px;
+  }
+}
+
+/* =============================================== */
+/* 2K AND 4K SCREENS (2560px and above) */
+/* =============================================== */
+
+@media (min-width: 2560px) {
+  .lo-bottom-sheet {
+    width: 900px;
+  }
+  
+  .lo-content {
+    padding: 40px;
+    padding-bottom: 140px;
+    gap: 28px;
+  }
+  
+  .lo-header {
+    padding: 40px 40px 32px;
+  }
+  
+  .lo-header-text h1 {
+    font-size: 28px;
+  }
+  
+  .lo-header-text p {
+    font-size: 16px;
+  }
+  
+  .lo-add-new-btn {
+    padding: 22px 28px;
+    font-size: 18px;
+  }
+  
+  .lo-floating-button-container {
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+  }
+  
+  .lo-floating-button {
+    padding: 22px;
+    font-size: 19px;
+  }
+}
+
+/* Prevent body scrolling when bottom sheet is open */
+body.lo-bottom-sheet-open {
   overflow: hidden;
-  position: fixed;
-  width: 100%;
-  height: 100%;
+}
+
+/* Desktop specific body scroll prevention */
+@media (min-width: 768px) {
+  body.lo-bottom-sheet-open {
+    overflow: hidden;
+  }
 }

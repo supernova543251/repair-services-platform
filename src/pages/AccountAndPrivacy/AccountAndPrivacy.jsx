@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AccountAndPrivacy.css';
-import { Shield, Mail, Phone, User, Lock, Bell, Share2, Trash2, Eye, EyeOff, Check, X, AlertCircle, ChevronRight, LogOut, Key, Database } from 'lucide-react';
+import { Shield, Phone, User, Trash2, Check, AlertCircle } from 'lucide-react';
+import { useLogin } from '../../Context/LoginContext/LoginContext';
+import { authService } from '../../services/auth';
 
 // Translation data
 const accountTranslations = {
@@ -9,28 +12,9 @@ const accountTranslations = {
     subtitle: "Manage your personal information and privacy settings",
     personalDetails: "Personal Details",
     fullName: "Full Name",
-    emailAddress: "Email Address",
     phoneNumber: "Phone Number",
-    changePassword: "Change Password",
-    currentPassword: "Current Password",
-    newPassword: "New Password",
-    confirmPassword: "Confirm New Password",
-    privacyPreferences: "Privacy Preferences",
-    dataSharing: "Data Sharing",
-    dataSharingDesc: "Allow us to share your data with trusted repair partners",
-    notifications: "Notifications",
-    notificationsDesc: "Receive updates about your repair status",
-    marketingConsent: "Marketing Consent",
-    marketingConsentDesc: "Receive promotional offers and discounts",
-    securityOptions: "Security Options",
-    loginActivity: "Login Activity",
-    lastLogin: "Last login: Today at 2:30 PM from Chrome on Windows",
-    viewAllActivity: "View All Activity",
-    twoFactorAuth: "Two-Factor Authentication",
-    twoFactorAuthDesc: "Add an extra layer of security to your account",
-    qrInstructions: "Scan the QR code with your authenticator app",
-    qrPlaceholder: "QR Code Placeholder",
     saveChanges: "Save Changes",
+    saving: "Saving...",
     dangerZone: "Danger Zone",
     deleteAccount: "Delete Account",
     deleteWarning: "Once you delete your account, there is no going back. Please be certain.",
@@ -38,35 +22,18 @@ const accountTranslations = {
     confirmDelete: "Yes, Delete My Account",
     cancelDelete: "Cancel",
     successMessage: "Settings saved successfully!",
-    deleteInitiated: "Account deletion process initiated."
+    deleteInitiated: "Account deletion process initiated.",
+    errorMessage: "Failed to save settings. Please try again.",
+    profileUpdated: "Profile updated successfully!"
   },
   hi: {
     title: "खाता और गोपनीयता",
     subtitle: "अपनी व्यक्तिगत जानकारी और गोपनीयता सेटिंग्स प्रबंधित करें",
     personalDetails: "व्यक्तिगत विवरण",
     fullName: "पूरा नाम",
-    emailAddress: "ईमेल पता",
     phoneNumber: "फ़ोन नंबर",
-    changePassword: "पासवर्ड बदलें",
-    currentPassword: "वर्तमान पासवर्ड",
-    newPassword: "नया पासवर्ड",
-    confirmPassword: "नए पासवर्ड की पुष्टि करें",
-    privacyPreferences: "गोपनीयता वरीयताएँ",
-    dataSharing: "डेटा साझाकरण",
-    dataSharingDesc: "हमें विश्वसनीय मरम्मत भागीदारों के साथ आपका डेटा साझा करने की अनुमति दें",
-    notifications: "सूचनाएं",
-    notificationsDesc: "अपनी मरम्मत स्थिति के बारे में अपडेट प्राप्त करें",
-    marketingConsent: "मार्केटिंग सहमति",
-    marketingConsentDesc: "प्रचारक ऑफ़र और छूट प्राप्त करें",
-    securityOptions: "सुरक्षा विकल्प",
-    loginActivity: "लॉगिन गतिविधि",
-    lastLogin: "अंतिम लॉगिन: आज दोपहर 2:30 बजे Windows पर Chrome से",
-    viewAllActivity: "सभी गतिविधि देखें",
-    twoFactorAuth: "दो-चरणीय प्रमाणीकरण",
-    twoFactorAuthDesc: "अपने खाते में सुरक्षा की एक अतिरिक्त परत जोड़ें",
-    qrInstructions: "अपने प्रमाणीकरण ऐप के साथ QR कोड स्कैन करें",
-    qrPlaceholder: "QR कोड प्लेसहोल्डर",
     saveChanges: "परिवर्तन सहेजें",
+    saving: "सहेजा जा रहा है...",
     dangerZone: "खतरा क्षेत्र",
     deleteAccount: "खाता हटाएं",
     deleteWarning: "एक बार जब आप अपना खाता हटा देते हैं, तो वापसी का कोई रास्ता नहीं है। कृपया निश्चित रहें।",
@@ -74,35 +41,18 @@ const accountTranslations = {
     confirmDelete: "हां, मेरा खाता हटाएं",
     cancelDelete: "रद्द करें",
     successMessage: "सेटिंग्स सफलतापूर्वक सहेजी गईं!",
-    deleteInitiated: "खाता हटाने की प्रक्रिया शुरू की गई।"
+    deleteInitiated: "खाता हटाने की प्रक्रिया शुरू की गई।",
+    errorMessage: "सेटिंग्स सहेजने में विफल। कृपया पुनः प्रयास करें।",
+    profileUpdated: "प्रोफाइल सफलतापूर्वक अपडेट की गई!"
   },
   mr: {
     title: "खाते आणि गोपनीयता",
     subtitle: "तुमची वैयक्तिक माहिती आणि गोपनीयता सेटिंग्ज व्यवस्थापित करा",
     personalDetails: "वैयक्तिक तपशील",
     fullName: "पूर्ण नाव",
-    emailAddress: "ईमेल पत्ता",
     phoneNumber: "फोन नंबर",
-    changePassword: "पासवर्ड बदला",
-    currentPassword: "सध्याचा पासवर्ड",
-    newPassword: "नवीन पासवर्ड",
-    confirmPassword: "नवीन पासवर्डची पुष्टी करा",
-    privacyPreferences: "गोपनीयता प्राधान्ये",
-    dataSharing: "डेटा शेअरिंग",
-    dataSharingDesc: "विश्वासार्ह दुरुस्ती भागीदारांसोबत तुमचा डेटा शेअर करण्यास परवानगी द्या",
-    notifications: "अधिसूचना",
-    notificationsDesc: "तुमच्या दुरुस्ती स्थितीबद्दल अद्यतने मिळवा",
-    marketingConsent: "विपणन संमती",
-    marketingConsentDesc: "जाहिरात ऑफर आणि सवलती मिळवा",
-    securityOptions: "सुरक्षा पर्याय",
-    loginActivity: "लॉगिन क्रियाकलाप",
-    lastLogin: "शेवटचे लॉगिन: आज दुपारी 2:30 वाजता Windows वर Chrome मधून",
-    viewAllActivity: "सर्व क्रियाकलाप पहा",
-    twoFactorAuth: "दोन-फॅक्टर प्रमाणीकरण",
-    twoFactorAuthDesc: "तुमच्या खात्यात सुरक्षेचा अतिरिक्त थर जोडा",
-    qrInstructions: "तुमच्या प्रमाणीकरण अॅपसह QR कोड स्कॅन करा",
-    qrPlaceholder: "QR कोड प्लेसहोल्डर",
     saveChanges: "बदल जतन करा",
+    saving: "जतन केले जात आहे...",
     dangerZone: "धोका क्षेत्र",
     deleteAccount: "खाते हटवा",
     deleteWarning: "एकदा तुम्ही तुमचे खाते हटवल्यानंतर, परत येण्याचा मार्ग नाही. कृपया निश्चित व्हा.",
@@ -110,12 +60,65 @@ const accountTranslations = {
     confirmDelete: "होय, माझे खाते हटवा",
     cancelDelete: "रद्द करा",
     successMessage: "सेटिंग्ज यशस्वीरित्या जतन केल्या!",
-    deleteInitiated: "खाते हटवण्याची प्रक्रिया सुरू केली."
+    deleteInitiated: "खाते हटवण्याची प्रक्रिया सुरू केली.",
+    errorMessage: "सेटिंग्ज जतन करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    profileUpdated: "प्रोफाइल यशस्वीरित्या अपडेट केली!"
   }
+};
+
+// Skeleton Loader Component
+const SkeletonLoader = () => {
+  return (
+    <div className="did-account-skeleton-container">
+      {/* Header Skeleton */}
+      <div className="did-skeleton-header">
+        <div className="skeleton skeleton-shield-icon"></div>
+        <div className="skeleton-text-group">
+          <div className="skeleton skeleton-main-title"></div>
+          <div className="skeleton skeleton-subtitle"></div>
+        </div>
+      </div>
+
+      {/* Personal Details Section Skeleton */}
+      <div className="did-skeleton-section">
+        <div className="skeleton skeleton-section-title"></div>
+        <div className="did-skeleton-input-group">
+          <div className="skeleton skeleton-input-label"></div>
+          <div className="skeleton skeleton-text-input"></div>
+        </div>
+        <div className="did-skeleton-input-group">
+          <div className="skeleton skeleton-input-label"></div>
+          <div className="skeleton skeleton-text-input"></div>
+        </div>
+      </div>
+
+      {/* Danger Zone Section Skeleton */}
+      <div className="did-skeleton-section">
+        <div className="skeleton skeleton-section-title-danger"></div>
+        <div className="did-skeleton-warning">
+          <div className="skeleton skeleton-warning-icon"></div>
+          <div className="skeleton-warning-text">
+            <div className="skeleton skeleton-warning-title"></div>
+            <div className="skeleton skeleton-warning-desc"></div>
+          </div>
+        </div>
+        <div className="skeleton skeleton-delete-btn"></div>
+      </div>
+
+      {/* Save Button Skeleton */}
+      <div className="did-skeleton-save-section">
+        <div className="skeleton skeleton-save-btn"></div>
+      </div>
+    </div>
+  );
 };
 
 function AccountAndPrivacy() {
   const [currentLanguage, setCurrentLanguage] = useState('en');
+  const { userData, updateProfile } = useLogin();
+  const navigate = useNavigate();
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const MINIMUM_LOADING_TIME = 1500; // 1.5 seconds minimum loading time
   
   // Get language preference from localStorage
   useEffect(() => {
@@ -133,77 +136,87 @@ function AccountAndPrivacy() {
     };
     
     window.addEventListener('languageChanged', handleLanguageChange);
+    
+    // Simulate loading
+    setTimeout(() => {
+      setShowSkeleton(false);
+    }, MINIMUM_LOADING_TIME);
+    
     return () => window.removeEventListener('languageChanged', handleLanguageChange);
   }, []);
 
   // State for user data
-  const [userData, setUserData] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567'
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: ''
   });
-
-  // State for privacy toggles
-  const [privacySettings, setPrivacySettings] = useState({
-    dataSharing: false,
-    notifications: true,
-    marketingConsent: false
-  });
-
-  // State for password change
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  });
-  const [showPasswords, setShowPasswords] = useState({
-    current: false,
-    new: false,
-    confirm: false
-  });
-
-  // State for two-factor authentication
-  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
 
   // State for delete account confirmation
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+
+  // Load user data when component mounts
+  useEffect(() => {
+    if (userData && !showSkeleton) {
+      setFormData({
+        name: userData.name || '',
+        phone: userData.phone || ''
+      });
+    }
+  }, [userData, showSkeleton]);
 
   // Handle form changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePrivacyToggle = (setting) => {
-    setPrivacySettings(prev => ({ 
-      ...prev, 
-      [setting]: !prev[setting] 
-    }));
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 5000);
   };
 
-  const handlePasswordChange = (e) => {
-    const { name, value } = e.target;
-    setPasswordData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const togglePasswordVisibility = (field) => {
-    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    alert(accountTranslations[currentLanguage].successMessage);
+    setIsLoading(true);
+
+    try {
+      // Update profile information
+      const profileResponse = await updateProfile({
+        name: formData.name
+      });
+
+      if (profileResponse.success) {
+        showMessage('success', accountTranslations[currentLanguage].profileUpdated);
+      } else {
+        showMessage('error', profileResponse.message || accountTranslations[currentLanguage].errorMessage);
+      }
+
+    } catch (error) {
+      showMessage('error', error.message || accountTranslations[currentLanguage].errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteAccount = () => {
     if (showDeleteConfirm) {
       // Actually delete the account
-      alert(accountTranslations[currentLanguage].deleteInitiated);
+      showMessage('info', accountTranslations[currentLanguage].deleteInitiated);
+      // In a real app, you would call an API to delete the account
+      setTimeout(() => {
+        authService.logout();
+        navigate('/');
+      }, 2000);
     } else {
       setShowDeleteConfirm(true);
     }
   };
+
+  if (showSkeleton) {
+    return <SkeletonLoader />;
+  }
 
   return (
     <div className="did-account-privacy-container">
@@ -215,8 +228,18 @@ function AccountAndPrivacy() {
         </div>
       </div>
 
+      {/* Message Display */}
+      {message.text && (
+        <div className={`did-message ${message.type}`}>
+          {message.type === 'success' && <Check size={18} />}
+          {message.type === 'error' && <AlertCircle size={18} />}
+          {message.type === 'info' && <AlertCircle size={18} />}
+          <span>{message.text}</span>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="did-account-form">
-        {/* Personal Details Section */}
+        {/* Personal Details Section - ONLY THIS SECTION REMAINS */}
         <section className="did-form-section">
           <h2 className="did-section-title">
             <User size={20} />
@@ -231,24 +254,10 @@ function AccountAndPrivacy() {
               type="text"
               id="did-name"
               name="name"
-              value={userData.name}
+              value={formData.name}
               onChange={handleInputChange}
               className="did-text-input"
-            />
-          </div>
-
-          <div className="did-input-group">
-            <label htmlFor="did-email" className="did-input-label">
-              <Mail size={18} />
-              <span className="multilingual-text">{accountTranslations[currentLanguage].emailAddress}</span>
-            </label>
-            <input
-              type="email"
-              id="did-email"
-              name="email"
-              value={userData.email}
-              onChange={handleInputChange}
-              className="did-text-input"
+              placeholder={accountTranslations[currentLanguage].fullName}
             />
           </div>
 
@@ -261,211 +270,23 @@ function AccountAndPrivacy() {
               type="tel"
               id="did-phone"
               name="phone"
-              value={userData.phone}
+              value={formData.phone}
               onChange={handleInputChange}
               className="did-text-input"
+              placeholder={accountTranslations[currentLanguage].phoneNumber}
+              readOnly // Phone is read-only in OTP-based system
             />
-          </div>
-        </section>
-
-        {/* Password Change Section */}
-        <section className="did-form-section">
-          <h2 className="did-section-title">
-            <Key size={20} />
-            <span className="multilingual-text">{accountTranslations[currentLanguage].changePassword}</span>
-          </h2>
-          <div className="did-input-group did-password-input">
-            <label htmlFor="did-currentPassword" className="did-input-label">
-              <Lock size={18} />
-              <span className="multilingual-text">{accountTranslations[currentLanguage].currentPassword}</span>
-            </label>
-            <div className="did-password-wrapper">
-              <input
-                type={showPasswords.current ? "text" : "password"}
-                id="did-currentPassword"
-                name="currentPassword"
-                value={passwordData.currentPassword}
-                onChange={handlePasswordChange}
-                className="did-text-input"
-              />
-              <button 
-                type="button" 
-                className="did-password-toggle"
-                onClick={() => togglePasswordVisibility('current')}
-                aria-label={showPasswords.current ? "Hide password" : "Show password"}
-              >
-                {showPasswords.current ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
-
-          <div className="did-input-group did-password-input">
-            <label htmlFor="did-newPassword" className="did-input-label">
-              <Lock size={18} />
-              <span className="multilingual-text">{accountTranslations[currentLanguage].newPassword}</span>
-            </label>
-            <div className="did-password-wrapper">
-              <input
-                type={showPasswords.new ? "text" : "password"}
-                id="did-newPassword"
-                name="newPassword"
-                value={passwordData.newPassword}
-                onChange={handlePasswordChange}
-                className="did-text-input"
-              />
-              <button 
-                type="button" 
-                className="did-password-toggle"
-                onClick={() => togglePasswordVisibility('new')}
-                aria-label={showPasswords.new ? "Hide password" : "Show password"}
-              >
-                {showPasswords.new ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
-
-          <div className="did-input-group did-password-input">
-            <label htmlFor="did-confirmPassword" className="did-input-label">
-              <Lock size={18} />
-              <span className="multilingual-text">{accountTranslations[currentLanguage].confirmPassword}</span>
-            </label>
-            <div className="did-password-wrapper">
-              <input
-                type={showPasswords.confirm ? "text" : "password"}
-                id="did-confirmPassword"
-                name="confirmPassword"
-                value={passwordData.confirmPassword}
-                onChange={handlePasswordChange}
-                className="did-text-input"
-              />
-              <button 
-                type="button" 
-                className="did-password-toggle"
-                onClick={() => togglePasswordVisibility('confirm')}
-                aria-label={showPasswords.confirm ? "Hide password" : "Show password"}
-              >
-                {showPasswords.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Privacy Preferences Section */}
-        <section className="did-form-section">
-          <h2 className="did-section-title">
-            <Database size={20} />
-            <span className="multilingual-text">{accountTranslations[currentLanguage].privacyPreferences}</span>
-          </h2>
-          
-          <div className="did-toggle-group">
-            <div className="did-toggle-item">
-              <div className="did-toggle-info">
-                <Share2 size={20} />
-                <div>
-                  <h3 className="multilingual-text">{accountTranslations[currentLanguage].dataSharing}</h3>
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].dataSharingDesc}</p>
-                </div>
-              </div>
-              <label className="did-switch">
-                <input 
-                  type="checkbox" 
-                  checked={privacySettings.dataSharing}
-                  onChange={() => handlePrivacyToggle('dataSharing')}
-                />
-                <span className="did-slider"></span>
-              </label>
-            </div>
-
-            <div className="did-toggle-item">
-              <div className="did-toggle-info">
-                <Bell size={20} />
-                <div>
-                  <h3 className="multilingual-text">{accountTranslations[currentLanguage].notifications}</h3>
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].notificationsDesc}</p>
-                </div>
-              </div>
-              <label className="did-switch">
-                <input 
-                  type="checkbox" 
-                  checked={privacySettings.notifications}
-                  onChange={() => handlePrivacyToggle('notifications')}
-                />
-                <span className="did-slider"></span>
-              </label>
-            </div>
-
-            <div className="did-toggle-item">
-              <div className="did-toggle-info">
-                <Mail size={20} />
-                <div>
-                  <h3 className="multilingual-text">{accountTranslations[currentLanguage].marketingConsent}</h3>
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].marketingConsentDesc}</p>
-                </div>
-              </div>
-              <label className="did-switch">
-                <input 
-                  type="checkbox" 
-                  checked={privacySettings.marketingConsent}
-                  onChange={() => handlePrivacyToggle('marketingConsent')}
-                />
-                <span className="did-slider"></span>
-              </label>
-            </div>
-          </div>
-        </section>
-
-        {/* Security Options Section */}
-        <section className="did-form-section">
-          <h2 className="did-section-title">
-            <Shield size={20} />
-            <span className="multilingual-text">{accountTranslations[currentLanguage].securityOptions}</span>
-          </h2>
-          
-          <div className="did-security-options">
-            <div className="did-security-item">
-              <div className="did-security-content">
-                <div>
-                  <h3 className="multilingual-text">{accountTranslations[currentLanguage].loginActivity}</h3>
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].lastLogin}</p>
-                </div>
-                <ChevronRight size={20} className="did-chevron-icon" />
-              </div>
-              <button className="did-view-activity-btn multilingual-text">
-                {accountTranslations[currentLanguage].viewAllActivity}
-              </button>
-            </div>
-            
-            <div className="did-security-item">
-              <div className="did-two-factor">
-                <div>
-                  <h3 className="multilingual-text">{accountTranslations[currentLanguage].twoFactorAuth}</h3>
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].twoFactorAuthDesc}</p>
-                </div>
-                <label className="did-switch">
-                  <input 
-                    type="checkbox" 
-                    checked={twoFactorEnabled}
-                    onChange={() => setTwoFactorEnabled(!twoFactorEnabled)}
-                  />
-                  <span className="did-slider"></span>
-                </label>
-              </div>
-              {twoFactorEnabled && (
-                <div className="did-two-factor-setup">
-                  <p className="multilingual-text">{accountTranslations[currentLanguage].qrInstructions}</p>
-                  <div className="did-qr-placeholder">
-                    <div className="did-qr-code multilingual-text">{accountTranslations[currentLanguage].qrPlaceholder}</div>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </section>
 
         {/* Form Actions */}
         <div className="did-form-actions">
-          <button type="submit" className="did-save-btn multilingual-text">
-            {accountTranslations[currentLanguage].saveChanges}
+          <button 
+            type="submit" 
+            className="did-save-btn multilingual-text"
+            disabled={isLoading}
+          >
+            {isLoading ? accountTranslations[currentLanguage].saving : accountTranslations[currentLanguage].saveChanges}
           </button>
         </div>
       </form>
@@ -504,6 +325,7 @@ function AccountAndPrivacy() {
             <button 
               className="did-delete-btn"
               onClick={handleDeleteAccount}
+              type="button"
             >
               <Trash2 size={18} />
               <span className="multilingual-text">{accountTranslations[currentLanguage].deleteAccount}</span>
